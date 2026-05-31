@@ -38,9 +38,47 @@
   it.indented(it.prefix(), it.body()),
 )
 
-#outline(depth: 3)
+#outline(title: [Contents], depth: 3)<toc>
 
 #pagebreak()
+
+// #set page(header: [
+//   _My Document Title_
+//   #h(1fr)
+//   Draft Version
+// ])
+
+#let current-section-title() = context {
+  let headings = query(heading.where(level: 1).before(here()))
+  if headings == () { return }
+  if (headings.last().body == [Contents]) {
+    [Lecture 1]
+    return
+  }
+  headings.last().body
+}
+
+#let link-to-current(body) = context {
+  // Filter headings to only look for level 1 before this exact spot
+  let current-heading = query(
+    heading.where(level: 1).before(here()),
+  ).last()
+
+  link(current-heading.location(), body)
+}
+
+#set page(header: {
+  [
+    #link(<toc>, [Introduction to Data Structure])
+    #h(1fr)
+    #context {
+      let final-page = counter(page).final().first()
+      // link((page: final-page, x: 0pt, y: 0pt))[#current-section-title()]
+      link-to-current[#current-section-title()]
+    }
+  ]
+})
+
 
 #include "lec1.typ"
 #include "lec2.typ"
