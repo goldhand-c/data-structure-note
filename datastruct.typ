@@ -5,6 +5,7 @@
 
 #set page(numbering: "1")
 
+// Title
 #align(center)[
   #v(2.9em)
   #text(size: 21pt, weight: "regular")[2110211 Introduction to Data Structure] \
@@ -33,6 +34,8 @@
   size: 1.1em,
 )
 
+
+
 #show outline.entry.where(level: 3): it => link(
   it.element.location(),
   it.indented(it.prefix(), it.body()),
@@ -41,12 +44,6 @@
 #outline(title: [Contents], depth: 3)<toc>
 
 #pagebreak()
-
-// #set page(header: [
-//   _My Document Title_
-//   #h(1fr)
-//   Draft Version
-// ])
 
 #let current-section-title() = context {
   let headings = query(heading.where(level: 1).before(here()))
@@ -68,24 +65,23 @@
 }
 
 #set page(header: {
-  [
-    #link(<toc>, [Introduction to Data Structure])
-    #h(1fr)
-    #context {
+  grid(
+    columns: (1fr, 1fr),
+    align: (left, right),
+    [
+      #link(<toc>, [Introduction to Data Structure])
+    ],
+    [#context {
       let final-page = counter(page).final().first()
       // link((page: final-page, x: 0pt, y: 0pt))[#current-section-title()]
       link-to-current[#current-section-title()]
-    }
-  ]
+    }],
+    [#v(0.18cm)],
+    grid.hline(stroke: 0.4pt),
+  )
 })
 
-
-#include "lec1.typ"
-#include "lec2.typ"
-#include "lec3.typ"
-#include "lec4.typ"
-#include "lec5.typ"
-#include "lec6.typ"
-#include "lec7.typ"
-#include "lec8.typ"
-#include "lec9.typ"
+// Include sections
+#for i in range(1, 12) {
+  include "lec" + str(i) + ".typ"
+}

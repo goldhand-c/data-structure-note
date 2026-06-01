@@ -330,3 +330,389 @@ class vector {
   - If not, we expand
 - Then, the data is put to mData[mSize]
 - Removing Data is done by just reduce the size
+
+```cpp
+template <typename T>
+class vector {
+  protected:
+    T *mData;
+    size_t mCap;
+    size_t mSize;
+    void expand(size_t capacity) {
+      T *arr = new T[capacity]();  // create a new dynamic array
+      for (size_t i = 0; i < mySize; i++) {
+        arr[i] = mData[i];  // move all data
+      }
+      delete [] mData;
+      mData = arr;  // delete old data and point to new one
+      mCap = capacity;
+    }
+    void ensureCapacity(size_t capacity) {
+      if (capacity > mCap) {
+        size_t s = (capacity > 2 * mCap) ? capacity : 2 * mCap;  // double the size
+        expand(s);
+      }
+    }
+  public:
+    void push_back(const T& element) {
+      ensureCapacity(mSize+1);
+      mData[mSize++] = element;  // add size and put element
+    }
+    void pop_back() {
+      mSize--;
+    }
+};
+```
+
+== Vector Constructors
+
+=== Problem of v0.1
+- Copy constructor and assignment operator is incorrect
+  - It is auto generate to copy all variables (but not the data it points to)
+- Rule of three in c++
+  - Consider destructor, copy constructor, assignment operator
+  - If any of them is written in the code, we mostly need all of them
+- Since c++11, it's rule of four an a half
+
+```cpp
+int main() {
+  CP::vector<int> w(5);
+
+  for (int i=0; i<5; i++) w[i] = i*10;
+  CP::vector<int> x(w);  // this creates shallow copy of w
+  CP::vector<int> y = w;
+  x[3] = -1;  // changes both w and y
+  cout << y[3] << endl;  // -1
+  cout << w[3] << endl;  // -1
+}
+```
+
+=== v0.2, add small access functions
+- `empty` and `size` also exists in other data structure
+- `size_t` is non-negative integer type
+
+```cpp
+bool empty() const {
+  return mSize == 0;
+}
+
+size_t size() const {
+  return mSize;
+}
+
+size_t capacity() const {
+  return mCap;
+}
+```
+
+=== v0.2 adding copy constructor & assignment operator
+```cpp
+// copy constructor
+vector(const vector<T>& a) {
+  mData = new T[a.capacity()]();
+  mCap = a.capacity();  // copies only value
+  mSize = a.size();
+  for (size_t i=0; i<a.size(); i++) {
+    mData[i] = a[i];
+  }
+}
+
+// copy assignment operator
+vector<T>& operator=(vector<T> &other) {
+  // protect against self-destruct
+  if (mData != other.mData) {
+    // delete current data
+    delete [] mData;
+    // copy the new data
+    mData = new T[other.capacity()]();
+    mCap = other.capacity();
+    mSize = other.size();
+    for (size_t i=0; i<a.size(); i++) {
+      mData[i] = a[i];
+    }
+  }
+}
+```
+
+=== Copy-and-swap
+- Utilize written copy-constructor nd destructor
+- Shorter code
+
+```cpp
+// copy assignment operator using copy-and-swap idiom
+vector<T>& operator=(vector<T> other) {  // notice the pass-by-value!!!
+  // other is copy-constructed which will be destruct at the end of this scope
+  // we swap the content of this class to the other class and let it be destructed
+  using std::swap;
+  swap(this->mSize, other.mSize);
+  swap(this->mCap, other.mCap);
+  swap(this->mData, other.mData);
+  return *this;
+}
+```
+
+== Iterator, Insert, Erase, & Analysis
+
+=== v0.3 Iterator and typedef keyword
+```cpp
+template <typename T>
+class vector {
+
+  protected:
+    T *mData;
+    size_t mCap;
+    size_t mSize;
+  protected:
+    typedef T* iterator;  // let iterator be type name of T pointer
+
+    // iterator
+    iterator begin() {
+      return &mData[0];
+    }
+
+    iterator end() {
+      return begin()+mSize;
+    }
+}
+```
+
+- See that pointer works just like how `std::vector::iterator` works
+- In fact, iterator is actually a pointer
+- `typedef` keyword allows us to map a type name
+  - `CP::vector<int>::iterator` is `int*`
+  - `CP::vector<bool>::iterator` is `bool*`
+
+=== insert
+- `push_back` actually call `insert(end(), element)`
+- Question: why we need `pos`?
+
+```cpp
+iterator insert(iterator it, const T& element) {
+  size_t pos = it - begin();
+  ensureCapacity(mSize+1);
+  for (size_t i = mSize; i > pos; i--) {
+    mData[i] = mData[i-1];
+  }
+  mData[pos] = element;
+  mSize++;
+  return begin()+pos;
+}
+
+void push_back(const T& element) {
+  insert(end(), element);
+}
+```
+
+=== erase
+- See that both `insert` and `erase` also change `mSize`
+
+```cpp
+void erase(iterator it) {
+  while((it+1)!=end()) {
+    *it = *(it+1);
+    it++;
+  }
+  mSize--;
+}
+```
+
+=== Exercise
+- Read the following fucntion and see how it works in `vector.h`
+  - `resize`, `clear`
+  - non-stl fucntion
+    - `insert_by_pos`
+    - `erase_by_pos`
+    - `erase_by_value`
+    - `constains`
+    - `index_of`
+- Read in #link("https://github.com/nattee/data-class/blob/master/stl-cp/vector.h")[#text(fill: blue)[here]]
+
+#box(fill: yellow, inset: 5pt)[Will do this part later]
+
+=== Analysis of how many data is copied by `push_back`
+- When full, `push_back` have to move all data to a new dynamic array
+- `ensureCapacity` double the size
+
+#let count = 10
+#let fib(n) = (
+  if n <= 2 { 1 } else { fib(n - 1) + fib(n - 2) }
+)
+
+=== Size and Capa & Copy Count
+- How much copy we need?
+
+// ── layout constants ──────────────────────────────────────────
+#let lm = 40pt    // left  margin inside page (room for y labels)
+#let rm = 90pt    // right margin
+#let tm = 180pt    // top   margin inside page (room for legend)
+#let bm = 0pt    // bottom margin (room for x labels)
+
+#let pw = 550.28pt - 20pt - 20pt - lm - rm   // plot width  ≈ 485pt
+#let ph = 480pt - 20pt - 30pt - tm - bm    // plot height ≈ 345pt
+
+#let x-max = 1024
+#let y-max = 1200
+
+// map data → page coords  (origin = bottom-left of plot area)
+#let px(x) = lm + x / x-max * pw
+#let py(y) = tm + ph - y / y-max * ph   // y=0 → bottom, y=y-max → top
+
+// ── colours ───────────────────────────────────────────────────
+#let col-bg = rgb("#1e1e2e")
+#let col-grid = rgb("#45475a")
+#let col-axis = rgb("#7f849c")
+#let col-label = rgb("#888888")
+#let col-size = rgb("#dbb054")   // yellow  – size
+#let col-cap = rgb("#f38ba8")   // red     – capacity
+#let col-copy = rgb("#89b4fa")   // blue    – #copy
+#let col-border = rgb("#313244")
+
+// ── helper: draw a line segment ───────────────────────────────
+#let seg(x0, y0, x1, y1, col, thick: 2pt) = place(
+  top + left,
+  dx: x0,
+  dy: y0,
+  line(start: (0pt, 0pt), end: (x1 - x0, y1 - y0), stroke: (paint: col, thickness: thick, cap: "round")),
+)
+
+// ── data ──────────────────────────────────────────────────────
+//  powers includes 0 as a sentinel for the first segment start
+#let P = (0, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024)
+//  capacity: in interval [P[i], P[i+1]) capacity = P[i+1]
+//  copy:     cumulative copies; jumps by P[i+1] at x = P[i+1]
+
+// ─────────────────────────────────────────────────────────────
+//  DRAWING
+// ─────────────────────────────────────────────────────────────
+#place(top + left, dx: 0pt, dy: 0pt)[
+  #box(width: 595.28pt, height: 480pt)[
+
+    // ── background plot area ──────────────────────────────────────
+    #place(top + left, dx: lm, dy: tm, rect(width: pw, height: ph, fill: rgb("#fefefe"), stroke: none))
+
+    // ── horizontal grid lines + y-axis labels ─────────────────────
+    #for ytick in (0, 200, 400, 600, 800, 1000, 1200) {
+      // grid line
+      place(top + left, dx: lm, dy: py(ytick), line(length: pw, stroke: (
+        paint: col-grid,
+        thickness: 0.5pt,
+        dash: "dashed",
+      )))
+      // label
+      place(top + left, dx: lm - 50pt, dy: py(ytick) - 6pt, align(right, box(width: 44pt, text(
+        fill: col-label,
+        size: 8.5pt,
+      )[#ytick])))
+    }
+
+    // ── vertical grid lines at every power of 2 ───────────────────
+    #for p in (1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024) {
+      place(top + left, dx: px(p), dy: tm, line(angle: 90deg, length: ph, stroke: (
+        paint: col-grid,
+        thickness: 0.4pt,
+        dash: "dashed",
+      )))
+    }
+
+    // ── x-axis tick labels (all powers of 2) ─────────────────────
+    #for p in (1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024) {
+      place(top + left, dx: px(p) - 14pt, dy: tm + ph + 7pt, box(width: 28pt, align(center, text(
+        fill: col-label,
+        size: 7.5pt,
+      )[#p])))
+      // tick mark
+      place(top + left, dx: px(p), dy: tm + ph, line(angle: 90deg, length: 4pt, stroke: (
+        paint: col-axis,
+        thickness: 1pt,
+      )))
+    }
+
+    // ── axes ──────────────────────────────────────────────────────
+    // x-axis
+    #place(top + left, dx: lm, dy: tm + ph, line(length: pw, stroke: (paint: col-axis, thickness: 1.2pt)))
+    // y-axis
+    #place(top + left, dx: lm, dy: tm, line(angle: 90deg, length: ph, stroke: (paint: col-axis, thickness: 1.2pt)))
+
+    // ── axis labels ───────────────────────────────────────────────
+    // y-axis label (rotated)
+    #place(top + left, dx: 3pt, dy: tm + ph / 2 - 25pt, rotate(-90deg, text(
+      fill: col-label,
+      size: 9pt,
+      weight: "semibold",
+    )[count]))
+    // x-axis label
+    #place(top + left, dx: lm + pw / 2 - 20pt, dy: tm + ph + 22pt, text(
+      fill: col-label,
+      size: 9pt,
+      weight: "semibold",
+    )[n (size)])
+
+    // ── SIZE line (yellow diagonal, y = x) ───────────────────────
+    #seg(px(0), py(0), px(1024), py(1024), col-size)
+
+    // ── CAPACITY step function (red) ─────────────────────────────
+    // Segments: for i in 0..10, interval [P[i], P[i+1]), cap = P[i+1]
+    // Starting from i=0: [0,1) cap=1, [1,2) cap=2, etc.
+    #for i in range(P.len() - 1) {
+      let x0 = P.at(i)
+      let x1 = P.at(i + 1)
+      let cap = P.at(i + 1)
+      // horizontal segment at height cap
+      seg(px(x0), py(cap), px(x1), py(cap), col-cap)
+      // vertical jump at x1 (if not last): from cap to 2*cap
+      if i + 2 < P.len() {
+        let cap-next = P.at(i + 2)
+        seg(px(x1), py(cap-next), px(x1), py(cap), col-cap)
+      }
+    }
+
+    // ── #COPY step function (blue) ────────────────────────────────
+    // cumulative copies jump at each power of 2 (excluding 0)
+    // At x = P[k] (k=1..11), cumulative += P[k]
+    #let cum = 0
+    #for k in range(1, P.len()) {
+      let xjump = P.at(k)
+      let xnext = if k + 1 < P.len() { P.at(k + 1) } else { 1024 }
+      let cum-prev = cum
+      cum = cum + xjump
+      let cum-cur = cum
+
+      // vertical jump at xjump
+      seg(px(xjump), py(calc.min(cum-cur, y-max)), px(xjump), py(cum-prev), col-cap)
+      seg(px(xjump), py(0), px(xjump), py(cum-prev), col-copy)
+      // horizontal segment from xjump to xnext at cum-cur (if within y-max)
+      if cum-cur <= y-max {
+        seg(px(xjump), py(cum-cur), px(xnext), py(cum-cur), col-cap)
+      }
+    }
+    // initial horizontal from 0 to 1 at y=0
+    #seg(px(0), py(0), px(1), py(0), col-copy)
+
+    // ── LEGEND (top-left inside plot area) ───────────────────────
+    #place(top + left, dx: lm + 8pt, dy: tm + 8pt, box(
+      fill: rgb("#ffffff"),
+      stroke: (paint: col-border, thickness: 1pt),
+      inset: (x: 10pt, y: 8pt),
+      radius: 4pt,
+    )[
+      #set text(size: 9pt)
+      #stack(
+        dir: ltr,
+        spacing: 18pt,
+        // size
+        stack(dir: ltr, spacing: 5pt, line(length: 22pt, stroke: (paint: col-size, thickness: 2.5pt)), text(
+          fill: col-size,
+        )[size]),
+        // capacity
+        stack(dir: ltr, spacing: 5pt, line(length: 22pt, stroke: (paint: col-cap, thickness: 2.5pt)), text(
+          fill: col-cap,
+        )[capacity]),
+        // #copy
+        stack(dir: ltr, spacing: 5pt, line(length: 22pt, stroke: (paint: col-copy, thickness: 2.5pt)), text(
+          fill: col-copy,
+        )[\#copy]),
+      )
+    ])
+
+  ] // end box
+] // end place
