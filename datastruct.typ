@@ -34,8 +34,6 @@
   size: 1.1em,
 )
 
-
-
 #show outline.entry.where(level: 3): it => link(
   it.element.location(),
   it.indented(it.prefix(), it.body()),
