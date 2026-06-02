@@ -636,7 +636,7 @@ void erase(iterator it) {
 
     // ── axis labels ───────────────────────────────────────────────
     // y-axis label (rotated)
-    #place(top + left, dx: 67pt, dy: tm + ph / 2 - 25pt, rotate(-90deg, text(
+    #place(top + left, dx: 75pt, dy: tm + ph / 2 - 25pt, rotate(-90deg, text(
       fill: col-label,
       size: 9pt,
       weight: "semibold",

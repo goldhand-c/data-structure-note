@@ -3,6 +3,8 @@
 #set raw(theme: "z.tmTheme")
 #show raw: set text(font: "LMMono10", size: 10pt)
 
+#show math.equation: set text(font: "Concrete Math")
+
 // Automatically scale Thai characters to be larger (like MatchLowerCase)
 #show regex("[\u0e00-\u0e7f]+"): set text(size: 1.18em, font: "TH Sarabun New")
 
@@ -225,7 +227,7 @@
   [\ ]
   v(2.2em, weak: true)
 }
-#for i in range(10, 12) {
+#for i in range(10, 14) {
   include "lect" + str(i) + ".typ"
   [\ ]
   v(2.2em, weak: true)

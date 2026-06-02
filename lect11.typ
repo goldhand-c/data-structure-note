@@ -227,4 +227,116 @@ class queue {
 ```
 
 === front(), back(), pop()
-Continue at _vid 52 5.48_
+```cpp
+template <typename T>
+class queue {
+  protected:
+    T *mData;
+    size_t mCap;
+    size_t mSize;
+    size_t mFront;
+  public:
+    // access
+    const T& front() const {
+      return mData[mFront];
+    }
+    const T& back() const {
+      return mData[(mFront + mSize - 1) % mCap];
+    }
+    // modify
+    void pop() {
+      mFront = (mFront + 1) % mCap;
+      mSize--;
+    }
+};
+```
+
+- `back = mFront + mSize - 1`
+  - Also circular (by `% mCap`)
+- `pop =` move `mFront` by `1`
+  - Also circular
+  - Also change size
+
+=== push, expand
+- `push` add data to `(mFront + mSize) % mCap`
+  - The space just after `back()`
+- Expand re-pack the `mData` so that `mFront` is `0`
+- `ensureCapacity` is the same
+
+```cpp
+template <typename T>
+class queue {
+  protected:
+    T *mData;
+    size_t mCap;
+    size_t mSize;
+    size_t mFront;
+    void expand(size_t capacity) {
+      T *arr = new T[capacity]();
+      for (size_t i = 0; i < mSize; i++) {
+        arr[i] = mData[(mFront + i) % mCap];
+      }
+      delete [] mData;
+      mData = arr;
+      mCap = capacity;
+      mFront = 0;
+    }
+    void ensureCapacity(size_t capacity) {
+      if (capacity > mCap) {
+        size_t s = (capacity > 2 * mCap) ? capacity : 2 * mCap;
+        expand(s);
+      }
+    }
+  public:
+    void push(const T& element) {
+      ensureCapacity(mSize+1);
+      mData[(mFront + mSize) % mCap] = element;
+      mSize++;
+    }
+};
+```
+
+=== Analysis
+- All access, modification is fast (constant time)
+- Space is re-used
+  - It is not shrunk when `mSize` reduce
+  - Space is not more than double of maximum `mSize` during its lifetime
+
+== Queue Exercise
+
+- We implement circular queue by maintain `mFront` and use circular logic (`% mCap`) to calculate the position of back of the queue
+  - Can we maintain `mBack` instead?
+  - Can we maintain both `mFront` and `mBack` but not `mSize`?
+- How about `mCap`, if we know `mFront`, `mSize`, `mBack`, can we calculate `mCap`?
+
+#table(
+  columns: 6,
+  [`mFront`], [`mSize`], [`mBack`], [`front()`], [`back()`], [`size()`],
+  [YES], [YES], [No], [`v[mFront]`], [`v[(mFront + mSize) % mCap]`], [`mSize()`],
+  [No], [YES], [YES], [#text(fill: orange)[`????`]], [`v[mBack]`], [`mSize`],
+  [YES], [No], [YES], [`v[mFront]`], [`v[mBack]`], [#text(fill: orange)[`????`]],
+)
+
+*Answer*
+- Use `front() = v[(mCap + mBack - mSize) % mCap]`
+- Use `size() = (mCap + mBack - mFront) % mCap`, but this will break when `mBack == mFront` because it can't determine whether the queue is empty or full.
+- Impossible, `mCap` can be scaled to any size larger than the current elements.
+
+=== Now, meet deque
+- Can you modify queue to include
+  - `push_front()`, add to the front of the queue
+  - `pop_back()`, remove from back of the queue
+- All operation should still be constant time
+
+*Answer*
+```cpp
+  void push_front(const T& element) {
+    ensureCapacity(mSize+1);
+    mFront = (mCap + mFront - 1) % mCap;
+    mData[mFront] = element;
+    mSize++;
+  }
+  void pop_back() {
+    mSize--;
+  }
+```
