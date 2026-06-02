@@ -529,7 +529,7 @@ void erase(iterator it) {
 
 #box(fill: yellow, inset: 5pt)[Will do this part later]
 
-=== Analysis of how many data is copied by `push_back`
+=== Analysis of how many data is copied by push_back
 - When full, `push_back` have to move all data to a new dynamic array
 - `ensureCapacity` double the size
 
@@ -542,10 +542,10 @@ void erase(iterator it) {
 - How much copy we need?
 
 // ── layout constants ──────────────────────────────────────────
-#let lm = 40pt    // left  margin inside page (room for y labels)
-#let rm = 90pt    // right margin
-#let tm = 180pt    // top   margin inside page (room for legend)
-#let bm = 0pt    // bottom margin (room for x labels)
+#let lm = 120pt    // left  margin inside page (room for y labels)
+#let rm = 20pt    // right margin
+#let tm = 20pt    // top   margin inside page (room for legend)
+#let bm = 190pt    // bottom margin (room for x labels)
 
 #let pw = 550.28pt - 20pt - 20pt - lm - rm   // plot width  ≈ 485pt
 #let ph = 480pt - 20pt - 30pt - tm - bm    // plot height ≈ 345pt
@@ -584,8 +584,9 @@ void erase(iterator it) {
 // ─────────────────────────────────────────────────────────────
 //  DRAWING
 // ─────────────────────────────────────────────────────────────
-#place(top + left, dx: 0pt, dy: 0pt)[
-  #box(width: 595.28pt, height: 480pt)[
+#figure(
+  //#place(bottom + left, dx: 0pt, dy: 0pt)[
+  box(width: 595.28pt, height: 256pt)[
 
     // ── background plot area ──────────────────────────────────────
     #place(top + left, dx: lm, dy: tm, rect(width: pw, height: ph, fill: rgb("#fefefe"), stroke: none))
@@ -635,7 +636,7 @@ void erase(iterator it) {
 
     // ── axis labels ───────────────────────────────────────────────
     // y-axis label (rotated)
-    #place(top + left, dx: 3pt, dy: tm + ph / 2 - 25pt, rotate(-90deg, text(
+    #place(top + left, dx: 67pt, dy: tm + ph / 2 - 25pt, rotate(-90deg, text(
       fill: col-label,
       size: 9pt,
       weight: "semibold",
@@ -714,5 +715,6 @@ void erase(iterator it) {
       )
     ])
 
-  ] // end box
-] // end place
+  ], // end box
+  // ] // end place
+)
