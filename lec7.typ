@@ -211,7 +211,7 @@ int main() {
 - There are multiple ways to achieve this
   - Let us consider operator overloading
 
-== Overloading `<`
+=== Overloading `<`
 - As stated earlier, set, map, and priority_queue use _operator_ `<` to compare two elements
 - It does not work if we overload _operator_ `>`
 

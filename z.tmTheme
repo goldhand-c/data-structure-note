@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//A- profiles//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Document Listings Light</string>
+	<key>settings</key>
+	<array>
+		<dict>
+			<key>settings</key>
+			<dict>
+				<key>background</key>
+				<string>#FAFAFA</string>
+				<key>caret</key>
+				<string>#000000</string>
+				<key>foreground</key>
+				<string>#232629</string>
+				<key>invisibles</key>
+				<string>#E0E0E0</string>
+				<key>lineHighlight</key>
+				<string>#F0F2F5</string>
+				<key>selection</key>
+				<string>#E2EBFF</string>
+			</dict>
+		</dict>
+
+		<dict>
+			<key>name</key>
+			<string>Comment</string>
+			<key>scope</key>
+			<string>comment, punctuation.definition.comment</string>
+			<key>settings</key>
+			<dict>
+				<key>fontStyle</key>
+				<string>italic</string>
+				<key>foreground</key>
+				<string>#6A737D</string>
+			</dict>
+		</dict>
+
+		<dict>
+			<key>name</key>
+			<string>String</string>
+			<key>scope</key>
+			<string>string</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#22863A</string>
+			</dict>
+		</dict>
+
+		<dict>
+			<key>name</key>
+			<string>Number and Constant</string>
+			<key>scope</key>
+			<string>constant.numeric, constant.language, constant.character, constant.other</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#CC1F16</string>
+			</dict>
+		</dict>
+
+		<dict>
+			<key>name</key>
+			<string>Keyword</string>
+			<key>scope</key>
+			<string>keyword, storage.type, storage.modifier</string>
+			<key>settings</key>
+			<dict>
+				<key>fontStyle</key>
+				<string>bold</string>
+				<key>foreground</key>
+				<string>#D73A49</string>
+			</dict>
+		</dict>
+
+		<dict>
+			<key>name</key>
+			<string>Function name</string>
+			<key>scope</key>
+			<string>entity.name.function, support.function</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#BF00BF</string>
+			</dict>
+		</dict>
+
+		<dict>
+			<key>name</key>
+			<string>Variable</string>
+			<key>scope</key>
+			<string>variable, support.variable</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#0044A6</string>
+			</dict>
+		</dict>
+
+		<dict>
+			<key>name</key>
+			<string>Class and Type</string>
+			<key>scope</key>
+			<string>entity.name.type, entity.name.class, support.type, support.class</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#6F42C1</string>
+			</dict>
+		</dict>
+
+		<dict>
+			<key>name</key>
+			<string>Heading</string>
+			<key>scope</key>
+			<string>markup.heading</string>
+			<key>settings</key>
+			<dict>
+				<key>fontStyle</key>
+				<string>bold</string>
+				<key>foreground</key>
+				<string>#005CC5</string>
+			</dict>
+		</dict>
+	</array>
+	<key>uuid</key>
+	<string>7a2c4d80-cb01-4bda-aef3-84b25e1a3bf2</string>
+</dict>
+</plist>

@@ -1,5 +1,8 @@
 #set text(font: ("Libertinus Serif", "KaiTi"), size: 10pt, ligatures: true)
+
+#set raw(theme: "z.tmTheme")
 #show raw: set text(font: "LMMono10", size: 10pt)
+
 // Automatically scale Thai characters to be larger (like MatchLowerCase)
 #show regex("[\u0e00-\u0e7f]+"): set text(size: 1.18em, font: "TH Sarabun New")
 

@@ -36,7 +36,7 @@ int main() {
   // iterator arithmetics
   vector<int>::iterator it3 = it1 + 2;
   cout << "data at it3: " << *it3 << endl; // 50
-  cout << "different of it3,it1: " << (it3 - it1) << endl; // 2
+  cout << "difference of it3,it1: " << (it3 - it1) << endl; // 2
 
   vector<float>::iterator it4 = v2.end();
   it4--;
@@ -59,7 +59,7 @@ int main() {
 
   cout << "----v1----" << endl;
   auto it = v1.begin();
-  while (it < v1.end()) ) { // should use != in other iterator types
+  while (it < v1.end()) { // should use != in other iterator types
     cout << it - v1.begin() << ": " << *it << endl;
     it++;
   }
@@ -348,29 +348,29 @@ using namespace std;
 bool check(int a[], int n, int X);
 
 int main() {
-    int a[15] = {323, 232, 138, 230, 437, 176, 127, 111, 329, 1, 296, 12, 3, 2, 6};
-    int n = sizeof(a) / sizeof(a[0]);
-    int X = 10000;
+  int a[15] = {323, 232, 138, 230, 437, 176, 127, 111, 329, 1, 296, 12, 3, 2, 6};
+  int n = sizeof(a) / sizeof(a[0]);
+  int X = 10000;
 
-    cout << check(a,n,X);
+  cout << check(a,n,X);
 }
 
 bool check(int a[], int n, int X) {
-    for (int i=0; i<(pow(2,n)); i++) {
-        int t = X;
-        for (int j=0; j<n; j++) {
-            if (i / ((int) pow(2,j+1)) % 2 == 0) {
-                t -= a[j];
-            }
+  for (int i=0; i<(pow(2,n)); i++) {
+    int t = X;
+    for (int j=0; j<n; j++) {
+      if (i / ((int) pow(2,j+1)) % 2 == 0) {
+        t -= a[j];
+      }
 
-            if (0 == t) {
-                cout << "YES" << endl;
-                return true;
-            }
-            if (0 > t) {break;}
-        }
+      if (0 == t) {
+        cout << "YES" << endl;
+        return true;
+      }
+      if (0 > t) {break;}
     }
-    cout << "NO" << endl;
-    return false;
+  }
+  cout << "NO" << endl;
+  return false;
 } // My stupid solution where I brute force every possible combinations
 ```

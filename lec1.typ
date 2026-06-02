@@ -1,14 +1,14 @@
 = Lecture 1
 
-== a
+== C++ Intro
 
 === variable
 
-== be
+== C++ from Java & Python
 
 === data
 
-== can
+== C++, if, for, while, function
 
 === scale
 qwertyuio

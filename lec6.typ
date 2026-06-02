@@ -202,6 +202,8 @@ Queue Application: Gotta generate 'em all
   // line((a, .6, b), (b, .6, a), mark: (end: ">", start: ">"))
 })
 
+== M3D2 Problem & Solution
+
 === Back to Our Problem
 - Start with 1
 - Each step is either `* 3` or `/ 2`
