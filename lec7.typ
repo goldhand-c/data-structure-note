@@ -1,4 +1,5 @@
 = Lecture 7
+
 == Priority Queue
 Queue with privilege
 
@@ -395,7 +396,6 @@ int main() {
 #table(
   columns: (auto, 1.5fr, 2fr, 2fr),
   align: (left, left, left, left),
-  stroke: 0.5pt + luma(150),
 
   // Header
   table.header([*Data Structure*], [*Pro*], [*Cons*], [*Remark*]),

@@ -281,7 +281,7 @@ namespace CP {
   - Better compilation
 - Introducing ".h" files
 
-=== C++ header file (.h) and `#include`
+=== C++ header file (.h) and \#include
 - To put a content of one file into another file, we use `#include "filename"` keyword
 - C++ will simply put the content of _filename_ into where we `#include` it
 - `#include` has more benefit
