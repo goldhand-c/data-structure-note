@@ -220,8 +220,13 @@
 #set table(stroke: 0.6pt + luma(150))
 
 // Include sections
-#for i in range(1, 12) {
-  include "lec" + str(i) + ".typ"
+#for i in range(1, 10) {
+  include "lect0" + str(i) + ".typ"
+  [\ ]
+  v(2.2em, weak: true)
+}
+#for i in range(10, 12) {
+  include "lect" + str(i) + ".typ"
   [\ ]
   v(2.2em, weak: true)
 }
