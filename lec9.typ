@@ -517,9 +517,9 @@ void erase(iterator it) {
 ```
 
 === Exercise
-- Read the following fucntion and see how it works in `vector.h`
+- Read the following function and see how it works in `vector.h`
   - `resize`, `clear`
-  - non-stl fucntion
+  - non-stl function
     - `insert_by_pos`
     - `erase_by_pos`
     - `erase_by_value`

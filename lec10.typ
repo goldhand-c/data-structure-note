@@ -62,7 +62,7 @@ namespace CP {
   - `pop()` is always constant
 
 === Stack by Vector
-- Instead of writing our own fucntion, there is another way to write a stack
+- Instead of writing our own function, there is another way to write a stack
 - We simply use #text(fill: purple)[vector] as our sole data member
 - Benefit: #text(fill: blue)[code reuse]
 - Drawback: #text(fill: green)[almost none] except that we need one more layer of function call
