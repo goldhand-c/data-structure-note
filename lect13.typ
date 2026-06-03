@@ -65,7 +65,7 @@ iterator max_element(iterator first, iterator last) {
 }
 ```
 
-*V0.1 complexities*
+=== V0.1 complexities
 #table(
   columns: 2,
   column-gutter: 16pt,

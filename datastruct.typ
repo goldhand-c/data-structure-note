@@ -52,14 +52,12 @@
 // -------------- Custom outline --------------
 
 #set heading(numbering: "1.1.1")
-#show heading: it => {
+#show heading: it => block(sticky: true)[
   // Invisible number keeps counter in sync, body renders normally
-  box(width: 0pt, hide(
+  #box(width: 0pt, hide(
     counter(heading).display(heading.numbering),
-  ))
-  it.body
-  [\ ]
-}
+  ))#it.body \ #v(0.2em)
+]
 
 #context {
   let subsection_mapper(subsection) = {

@@ -6,8 +6,8 @@
 - Iterator is a _pointer to position_
 - First element is `begin()`
 - The one _after_ the last element is `end()`
-- For insert, valid position is from `begin()` to `end()`, inclusive
-- For erase, valid position is from `begin()` up to _before_ `end()`
+- For `insert`, valid position is from `begin()` to `end()`, inclusive
+- For `erase`, valid position is from `begin()` up to _before_ `end()`
 - Different vector, different iterator
   - `v1.end()` is not the same as `v2.end()`
 
