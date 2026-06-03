@@ -881,7 +881,7 @@ $
 $
 
 === Exercise
-If we use different number of children per node, say $4$-ary heap, the same logic would still holds.
+If we use different number of children per node, say $4$-ary heap, with same logic still holds.
 + How to keep data in dynamic array?
 + Write the new functions `fixUp` and `fixDown`
 + Is it faster?? Consider any $n$-ary heap

@@ -225,7 +225,7 @@
 #set table(stroke: 0.6pt + luma(150))
 
 // Include sections
-#let lect = 13
+#let lect = 14
 #for i in range(1, lect + 1) {
   if (i < 10) {
     include "lect0" + str(i) + ".typ"
