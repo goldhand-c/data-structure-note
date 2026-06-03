@@ -213,7 +213,7 @@ $
   - Children of root are drawn at the same level at #text(fill: purple)[level 1] (depth 1)
   - Children of children of root are at #text(fill: purple)[level 2] (depth 2)
 
-#v(-2em)
+#block(sticky: true)[#v(-4em)]
 #align(center)[#scale(x: 65%, y: 65%)[
   #raw-render(
     ```dot
@@ -240,7 +240,7 @@ $
 - Complete tree = the tree must be filled with every possible node at every level (except the deepest level which must be filled as far to the left as possible)
   - Blank tree is considered a complete binary tree
 
-#v(-2em)
+#block(sticky: true)[#v(-4em)]
 #grid(
   align: horizon,
   columns: (0.2fr, 1fr, 1.2fr, 0.5fr, 0.6fr),
@@ -324,7 +324,7 @@ $
 
 Hint: The answer is unique (There are exactly 1 way to draw a complete binary tree of size k)
 
-#v(-2em)
+#block(sticky: true)[#v(-4em)]
 #grid(
   align: (center + horizon),
   columns: (0.4fr, 0.48fr, 0.8fr, 0.9fr),
@@ -420,7 +420,7 @@ Use Complete Binary Tree to make `priority_queue`
   + Tree must always be #text(fill: purple)[Complete Binary Tree]
   + For any node, its #text(fill: purple)[value must be greater or equal that of its children]
 
-#v(-2em)
+#block(sticky: true)[#v(-4em)]
 #align(center)[#scale(x: 65%, y: 65%)[
   #raw-render(
     ```dot
@@ -449,7 +449,7 @@ Use Complete Binary Tree to make `priority_queue`
 
 #v(2em, weak: true)
 `push(60)`
-#v(-2em)
+#block(sticky: true)[#v(-5em)]
 #align(center)[#scale(x: 65%, y: 65%)[
   #raw-render(
     ```dot
@@ -474,7 +474,7 @@ Use Complete Binary Tree to make `priority_queue`
   - After swap, re-check with new parent
   - Kepp doing until correct or at root
 
-#v(-2em)
+#block(sticky: true)[#v(-4em)]
 #align(center)[#scale(x: 65%, y: 65%)[
   #raw-render(
     ```dot
@@ -502,7 +502,7 @@ See that: after each swap, the swapped nodes does not violate with #text(fill: g
 - Value rules might be broken
   - Fix it
 
-#v(-2em)
+#block(sticky: true)[#v(-4em)]
 #align(center)[#scale(x: 65%, y: 65%)[
   #raw-render(
     ```dot
@@ -527,7 +527,7 @@ See that: after each swap, the swapped nodes does not violate with #text(fill: g
     - Beware! There is a case where we might have only one child
   - Keep doing until correct or has no children
 
-#v(-2em)
+#block(sticky: true)[#v(-4em)]
 #align(center)[#scale(x: 65%, y: 65%)[
   #raw-render(
     ```dot
@@ -564,7 +564,7 @@ See that: after each swap, the swapped nodes does not violate with #text(fill: g
 - #text(fill: blue)[Right child] of node `i` is #text(fill: blue)[at `(i*2)+2`]
 - #text(fill: orange)[Parent] of node `i` is #text(fill: orange)[at `(i-1)/2`]
 
-#v(-2em)
+#block(sticky: true)[#v(-4em)]
 #align(center)[#scale(x: 65%, y: 65%)[
   #raw-render(
     ```dot
@@ -792,7 +792,7 @@ priority_queue(std::vector<T> &v, const Comp& c = Comp()) :
 - Fix down from back to front
 
 === How fast?
-#v(-6em)
+#block(sticky: true)[#v(-8em)]
 #align(center)[#scale(x: 52%, y: 52%)[
   #raw-render(
     ```dot
