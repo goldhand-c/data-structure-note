@@ -44,8 +44,9 @@
 //   it.indented(it.prefix(), it.body()),
 // )
 
-// Outline
-// ---------------------------------------------
+// #outline(title: [Contents], depth: 3)<toc>
+
+// -------------- Custom outline --------------
 
 #set heading(numbering: "1.1.1")
 #show heading: it => {
@@ -165,12 +166,11 @@
   }
 }
 
-// ---------------------------------------------
-
-// #outline(title: [Contents], depth: 3)<toc>
+// --------------------------------------------
 
 #pagebreak()
 
+// Link to current section
 #let current-section-title() = context {
   let headings = query(heading.where(level: 1).before(here()))
   if headings == () { return }
@@ -202,6 +202,7 @@
   }
 }
 
+// Header
 #set page(header: {
   grid(
     columns: (1fr, 1fr),
@@ -210,7 +211,7 @@
       #link(<toc>, [Introduction to Data Structure])
     ],
     [#context {
-      let final-page = counter(page).final().first()
+      // let final-page = counter(page).final().first()
       // link((page: final-page, x: 0pt, y: 0pt))[#current-section-title()]
       link-to-current[#current-section-title()]
     }],
@@ -219,16 +220,17 @@
   )
 })
 
+// Table
 #set table(stroke: 0.6pt + luma(150))
 
 // Include sections
-#for i in range(1, 10) {
-  include "lect0" + str(i) + ".typ"
-  [\ ]
-  v(2.2em, weak: true)
-}
-#for i in range(10, 14) {
-  include "lect" + str(i) + ".typ"
+#let lect = 13
+#for i in range(1, lect + 1) {
+  if (i < 10) {
+    include "lect0" + str(i) + ".typ"
+  } else {
+    include "lect" + str(i) + ".typ"
+  }
   [\ ]
   v(2.2em, weak: true)
 }

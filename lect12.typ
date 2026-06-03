@@ -480,8 +480,8 @@ void ensureCapacity(size_t capacity) {
 
 === Another Definition for $cal(O)$ and $Theta$
 - Using set builder notation
-- $cal(O)(g(n)) = { f(n) | "There exists" c > 0 "and" n_0 >= 0 "such that" f(n) <= c g(n) "for" n >= n_0 }$
-- $Theta(g(n)) = { f(n) | "There exists" c_1, c_2 > 0 "and" n_0 >= 0 "such that" c_1 g(n) <= f(n) <= c_2 g(n) "for" n >= n_0 }$
+- $cal(O)(g(n)) = { f(n) | "there exists" c > 0 "and" n_0 >= 0 "such that" f(n) <= c g(n) "for" n >= n_0 }$
+- $Theta(g(n)) = { f(n) | "there exists" c_1, c_2 > 0 "and" n_0 >= 0 "such that" c_1 g(n) <= f(n) <= c_2 g(n) "for" n >= n_0 }$
 - The result is the same as definition using $lim$
 
 === Summary
