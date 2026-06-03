@@ -4,7 +4,7 @@
 Our first "real" data structure
 
 === Intro
-- Now we will create more complex data structure CP::vector
+- Now we will create more complex data structure `CP::vector`
 - It can store variable length array
   - Implemented as a dynamic array
 - Can be accessed by `operator[]`

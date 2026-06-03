@@ -26,7 +26,7 @@ int main() {
     cout << q.front() << endl;
     q.pop();
   }
-  cout << "-- emaple 2 --" << endl;
+  cout << "-- example 2 --" << endl;
   queue<vector<int>> q2;
   vector<int> v1 = {1,2,3};
   vector<int> v2 = {99,88,-1};
@@ -70,7 +70,7 @@ Queue Application: Fast sorting with no comparison
   - GET FROM QUEUE step: Start form queue $0$ to queue $B-1$, remove data from the queue and put back to the array
 
 === Example
-Input ` 115  15  42  305  21  8  403`
+Input ` 115  15  42  305  21  8  463`
 
 *Round 1 (digit 0), from queue*
 ```

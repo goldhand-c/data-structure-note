@@ -1,9 +1,9 @@
-#set text(font: ("Libertinus Serif", "KaiTi"), size: 10pt, ligatures: true)
+#set text(font: ("Linux Libertine", "KaiTi"), size: 10pt, number-type: "old-style")
 
 #set raw(theme: "z.tmTheme")
-#show raw: set text(font: "LMMono10", size: 10pt)
+#show raw: set text(font: "LMMono10", size: 10pt, number-type: "lining")
 
-#show math.equation: set text(font: "Concrete Math")
+#show math.equation: set text(font: "Concrete Math", number-type: "lining")
 
 // Automatically scale Thai characters to be larger (like MatchLowerCase)
 #show regex("[\u0e00-\u0e7f]+"): set text(size: 1.18em, font: "TH Sarabun New")
@@ -13,7 +13,10 @@
 // Title
 #align(center)[
   #v(2.9em)
-  #text(size: 21pt, weight: "regular")[2110211 Introduction to Data Structure <toc>] \
+  #v(-2cm)
+  #label("head")
+  #v(2cm)
+  #text(size: 21pt, weight: "regular")[2110211 Introduction to Data Structure] \
   #v(2.0em)
   #text(size: 14pt)[Sorrawee Worawichayawiwat] \
   #v(0.4em)
@@ -98,7 +101,7 @@
     )
 
     block(
-      above: 6mm,
+      above: 2mm,
       below: 2mm,
       link(
         chapter_location,
@@ -129,7 +132,7 @@
       let subsections_body = section_subsections.map(subsection_mapper).join()
 
       block(
-        above: 3mm,
+        above: 2.4mm,
         below: 1mm,
         link(
           section_location,
@@ -151,7 +154,7 @@
               right,
               block(
                 width: 90%,
-                above: 2mm,
+                above: 2.4mm,
                 inset: (right: 5mm),
                 align(left, par(justify: true, text(
                   font: "Nebula Sans",
@@ -208,7 +211,7 @@
     columns: (1fr, 1fr),
     align: (left, right),
     [
-      #link(<toc>, [Introduction to Data Structure])
+      #link(<head>, [Introduction to Data Structure])
     ],
     [#context {
       // let final-page = counter(page).final().first()
