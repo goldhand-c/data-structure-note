@@ -183,8 +183,9 @@ while (p != NULL && p->next != x) p = p->next;
 - Now, if `X` is a pointer to a node, we can easily go to #text(fill: orange)[node before `X`] and then `erase` or `insert`
 
 ```
-mSize mFirst        node    |------▼            |------▼
-  [ 4,  ]     [NULL, 20, next]    [prev, 16, next]    [prev, 77, NULL]
+                                          x
+mSize mFirst        node    |------▼      ▼     |------▼
+  [ 4,  ]  -► [NULL, 20, next]    [prev, 16, next]    [prev, 77, NULL]
                             ▲______|            ▲______|
 ```
 
@@ -199,9 +200,70 @@ x->prev = tmp;
 ```
 ```
                                           x
-mSize mFirst        node                  ▼
-  [ 4,  ]     [NULL, 20, next]    [prev, 16, next]    [prev, 77, NULL]
-                          | ▲          ▲ |
+mSize mFirst        node                  ▼     |------▼
+  [ 4,  ]  -► [NULL, 20, next]    [prev, 16, next]    [prev, 77, NULL]
+                          | ▲          ▲ |      ▲______|
                           ▼ |          | ▼
                   tmp -► [prev , 99, next]
 ```
+
+=== Erase in Doubly List
+```cpp
+x->prev->next = x->next;
+x->next->prev = x->prev;
+delete x;
+```
+
+```
+                                          x
+mSize mFirst        node    |-------------▼------------▼
+  [ 4,  ]  -► [NULL, 20, next]                        [prev, 77, NULL]
+                            ▲__________________________|
+```
+
+== Circular Linked List
+
+=== Problem Solved
+- `erase` / `insert` at iterator `X` is now #text(fill: blue)[easy]
+- But, adding data at the end (`push_back`) is still hard
+  - Need to get `X` to point to the last element
+  - `push_back` is popular in real world
+  - Right now we have only `push_back` (fast addition to the first)
+- Also some minor issue about the #text(fill: green)[code cleanliness]
+  - `insert` / `erase` the first / last node
+
+=== v0.3 Circular Linked List
+- Use `mLast` instead of `mFirst`
+- Fast access to both first and last element
+
+```cpp
+CP::node<int> *first = mLast->next;
+```
+
+```
+
+  /------------------------------------------------------------\
+  \-► [20, next] -► [3, next] -► [16, next] -► [77, next] --/
+                                                        ▲
+                                                        |
+                                                   mSize mLast
+                                                     [ 4,  ]
+```
+
+=== v0.4 Circular Doubly Linked List
+- Special linking to last element
+  - Fast access to both first and last element
+  - Can now easily insert at the end
+
+```cpp
+CP::node<int> *last = mFirst->prev;
+```
+
+```
+                |---------------------------------------------------\
+mSize mFirst    ▼   node    |------▼            |------▼            /
+  [ 4,  ]  -► [prev, 20, next]    [prev, 16, next]    [prev, 77, next]
+                /           ▲______|            ▲______|            ▲
+                \---------------------------------------------------|
+```
+
