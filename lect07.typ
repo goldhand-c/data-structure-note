@@ -148,7 +148,7 @@ int main() {
 
   cout << a.getFullName() << endl;
   if (a.is1stHonor()) {cout << "YES" endl;} else {cout << "NO" << endl;}
-  // Student b; // <-- cannot compile beacuse there is no default constructor
+  // Student b; // <-- cannot compile because there is no default constructor
 }
 ```
 
