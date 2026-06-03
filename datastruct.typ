@@ -56,7 +56,7 @@
   // Invisible number keeps counter in sync, body renders normally
   #box(width: 0pt, hide(
     counter(heading).display(heading.numbering),
-  ))#it.body \ #v(0.2em)
+  ))#it.body \ #v(0.2em, weak: true)
 ]
 
 #context {
