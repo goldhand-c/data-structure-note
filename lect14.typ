@@ -214,6 +214,12 @@ x->next->prev = x->prev;
 delete x;
 ```
 
+Note: When we refer to a pointer, `x` is the variable itself, but the value of `x` is the destination address it is pointing to.
+Say `x` holds a node containing ```cpp [x->prev, 16, x->next]```.
+In this set up, ```cpp x->prev->next``` represents the next pointer inside the node before `x`.
+If we write ```cpp x->prev->next = x->next;```, it means that the previous node's next pointer now stores the destination of the node after `x`.
+In other words, it successfully skips `x` from the sequence.
+
 ```
                                           x
 mSize mFirst        node    |-------------▼------------▼

@@ -2,6 +2,13 @@
 
 == Array & Vector
 
+=== Array
+- Two types: Static and Dynamic
+- Raw Data
+- Fast random access
+- Static = size cannot be changes
+- Dynamic = can change size
+
 ```cpp
 #include <iostream>
 #include <vector>

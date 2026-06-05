@@ -130,3 +130,52 @@
 === Second chapter, second section, first subsection
 #pagebreak()
 === Second chapter, second section, second subsection
+
+#import "@preview/mitex:0.2.7": *
+
+#assert.eq(mitex-convert("\alpha x"), "alpha  x ")
+
+Write inline equations like #mi("x") or #mi[y].
+
+Also block equations (this case is from #text(blue.lighten(20%), link("https://katex.org/")[katex.org])):
+
+#mitex(
+  `
+  \newcommand{\f}[2]{#1f(#2)}
+  \f\relax{x} = \int_{-\infty}^\infty
+    \f\hat\xi\,e^{2 \pi i \xi x}
+    \,d\xi
+`,
+)
+
+We also support text mode (in development):
+
+#mitext(
+  `
+  \iftypst
+    #set math.equation(numbering: "(1)", supplement: "equation")
+  \fi
+
+  \section{Title}
+
+  A \textbf{strong} text, a \emph{emph} text and inline equation $x + y$.
+
+  Also block \eqref{eq:pythagoras}.
+
+  \begin{equation}
+    a^2 + b^2 = c^2 + d^2 \label{eq:pythagoras}
+  \end{equation}
+
+  \LaTeX
+  $$
+    f(x) = \int_{-\infty}^{\infty} \hat f(\xi) e^{2 \pi i \xi x} d \xi
+  $$
+
+  {\color{blue} typst}
+  \iftypst
+    $
+      f(x) = integral_(-oo)^oo hat(f)(xi)e^(2 pi i xi x) d xi
+    $
+  \fi
+`,
+)

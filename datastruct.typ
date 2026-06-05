@@ -135,7 +135,7 @@
         link(
           section_location,
           text(
-            size: 1em,
+            size: 1.06em,
             weight: "semibold",
             h(2em)
               // + [#section_num]
