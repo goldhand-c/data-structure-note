@@ -151,7 +151,7 @@ void printUniqueWords3(string filename) { // slow find time
 
 === Set
 ```cpp
-void printUniqueWords3(string filename) { // quick find existence
+void printUniqueWords4(string filename) { // quick find existence
   set<string> words;
   Tokenizer tokenizer(filename);
   while(tokenizer.hasNext()) {
