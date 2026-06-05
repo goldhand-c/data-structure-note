@@ -232,6 +232,5 @@
   } else {
     include "lect" + str(i) + ".typ"
   }
-  [\ ]
-  v(2.2em, weak: true)
+  v(3.2em, weak: true)
 }
