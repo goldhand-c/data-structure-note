@@ -273,3 +273,10 @@ mSize mFirst    ▼   node    |------▼            |------▼            /
                 \---------------------------------------------------|
 ```
 
+#for i in range(15) {
+  [.\ ]
+}
+
+== Linked List with Header
+
+== CP::list

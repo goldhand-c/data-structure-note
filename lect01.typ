@@ -3,7 +3,7 @@
 == C++ Intro
 
 === C++ Workflow
-Source Code (`*.cpp`) $==>$ Compiler (`gcc`) ผ่าน Code::Blocks $==>$ Executable File (`*.exe`)
+Source Code (`*.cpp`) $-->$ Compiler (`gcc`) ผ่าน Code::Blocks $-->$ Executable File (`*.exe`)
 
 === Hello World
 ```cpp
