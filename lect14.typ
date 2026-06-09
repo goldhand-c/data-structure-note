@@ -273,10 +273,327 @@ mSize mFirst    ▼   node    |------▼            |------▼            /
                 \---------------------------------------------------|
 ```
 
-#for i in range(15) {
-  [.\ ]
-}
-
 == Linked List with Header
 
+=== Minor Problem
+- Code is #text(fill: red)[not really clean] because of the first element (or the last element)
+- Consider `insert` at the first node and insert at the second node of Doubly Linked List
+  - Assume we have a pointer to that node
+
+```cpp
+// assume thta s points to the second node
+CP::node<int> *tmp =
+  new CP::node<int>(99,NULL,NULL);
+tmp->next = s;
+tmp->prev = s->prev;
+s->prev->next = tmp;
+s->prev = tmp;
+
+// assume that f points to the first node
+CP::node<int> *tmp =
+  new CP::node<int>(99,NULL,NULL);
+tmp->next = f;
+tmp->prev = f->prev;
+mFirst = tmp;  // Because first node is different
+f->prev = tmp;
+```
+
+=== Special First Node Problem
+- First node (and last node) is #text(fill: red)[different from other nodes] in both singly or doubly linked list
+- For circular singly and circular doubly, each node look the same #text(fill: orange)[but we also have to adjust `mFirst`] (or `mLast`)
+- This affects both `insert` and `erase`
+- Also need to deal #text(fill: red)[when `mFirst` is `NULL`] (when `mSize == 0`)
+
+```cpp
+// circular doubly linked list
+void push_front(const T& e) {
+  if (mSize == 0) {
+    mFirst = new node(e, NULL, NULL);
+    mFirst->next = mFirst;
+    mFirst->prev = mFirst;
+  } else {
+    node* tmp =
+      new node(e, mFirst->prev, mFirst);
+    mFirst->prev->next = tmp;
+    mFirst->prev = tmp;
+    mFirst = tmp;
+  }
+}
+```
+
+=== Another Example
+- Remove for circular doubly linked list
+- Remove is to find and then `erase`
+
+```cpp
+// circular doubly linked list
+void remove(const &T e) {
+  node *p = mFirst;
+  for (size_t i = 0; i < mSize; i++, p = p->next) {
+    if (p->data == e) {
+      p->next->prev = p->prev;
+      p->prev->next = p->next;
+      if (p == mFirst) {
+        mFirst = p->next;
+      }
+      delete p;
+      mSize--;
+      break;
+    }
+  }
+  if (mSize == 0) mFirst = NULL;
+}
+```
+
+=== Linked List with Header
+- Add a special node that will not be used to stored data
+
+=== Simpler Code with Header
+```cpp
+void push_front(const T& e) {
+  node* f = mFirst->next;
+  node* tmp = new node(e, f, mFirst);
+  mFirst->next = tmp;
+  f->prev = tmp;
+}
+
+void remove(const T& e) {
+  node *p = mFirst->next;
+  while (p != mHeader && p->data != e)
+    p = p->next;
+  if (p != mHeader) {
+    p->next->prev = p->prev;
+    p->prev->next = p->next;
+    mSize--;
+  }
+}
+```
+
+- Header simplifies code
+  - Because `mFirst` always points to the header (`mFirst` never is `NULL`)
+
+
+=== Variant Summary
+- #text(fill: blue)[Circular] makes accessing first and last element fast
+- #text(fill: orange)[Doubly] makes accessing previous element fast
+  - Also making `erase` at node `p` easy if we have pointer to `p`
+  - Need more space for `prev` pointer
+- #text(fill: red)[Header] makes code simpler
+  - Need more space for header node
+
+=== Final Version
+- `CP::list` is "#text(fill: blue)[circular] #text(fill: orange)[doubly] linked list #text(fill: red)[with header]"
+  - #text(fill: green)[Simple code] for `insert` / `erase`
+  - Use #text(fill: red)[most space] (two pointers per node, need header node)
+  - Can `push_back`, `pop_back`, `push_front`, `pop_front`
+- Also need custom iterator class
+  - #text(fill: purple)[Iterator] just store a pointer to a node
+  - We cannot directly use a pointer to a node (`node*`) because we need to override some operator (`--`, `++`, and something else)
+
 == CP::list
+
+=== Layout
+- #text(fill: purple)[Inner class] is a class inside another class
+  - #text(fill: purple)[Inner class] can access any members of #text(fill: orange)[outer class]
+  - #text(fill: orange)[Outer class] cannot access `protected` or `private` of the #text(fill: purple)[inner class]
+- #text(fill: blue)[Friend class] allows other class to access
+
+```cpp
+template <typename T>
+class list {
+  protected:
+    class node {
+      friend class list;
+      public:
+        T data;
+        node *prev, *next;
+        // some functions
+    };
+    class list_iterator {
+      friend class list;
+      protected:
+        node* ptr;
+      public:
+        // some functions && operators
+    };
+  public:
+    typedef list_iterator iterator;
+  protected:
+    node *mHeader; // pointer to a header node
+    size_t mSize;
+  public:
+    // functions
+};
+```
+
+=== Doubly Linked List Node
+```cpp
+class node {
+  friend class list;
+  public:
+    T data;
+    node *prev;
+    node *next;
+
+    node() :
+      data( T() ), prev( this ), next( this ) { }
+    node(const T& data, node* prev, node* next) :
+      data( T(data) ), prev( prev ), next( next ) { }
+};
+```
+
+=== Constructor
+```cpp
+  // default constructor
+  list() : mHeader( new node() ), mSize( 0 ) { }
+
+  // copy constructor
+  list(list<T>& a) : mHeader( new node() ), mSize( 0 ) {
+    for (iterator it = a,begin(); it != a.end(); it++) {
+      push_back(*it);
+    }
+  }
+
+  list<T>& operator=(list<T> other) {
+    using std::swap;
+    swap(this->mHeader, other.mHeader);
+    swap(this->mSize, other.mSize);
+    return *this;
+  }
+
+  ~this() {
+    clear();
+    delete mHeader;
+  }
+```
+
+=== Small functions
+```cpp
+  // capacity function
+  bool empty() const { return mSize == 0; }
+  size_t size() const { return mSize; }
+
+  // access
+  T& front() { return mHeader->next->data; }
+  T& back() { return mHeader->prev->data; }
+
+  // modifier
+  void push_back(const T& element) {
+    insert(end(), element);
+  }
+  void push_front(const T& element) {
+    insert(begin(), element);
+  }
+  void pop_back() {
+    erase(iterator(mHeader->prev));
+  }
+  void pop_front() {
+    erase(begin());
+  }
+```
+
+- Task is delegated to `insert` and `erase`
+- Need iterator
+
+=== Iterator
+```cpp
+class list_iterator {
+  friend class list;
+  protected:
+    node* ptr;
+  public:
+
+  list_iterator() : ptr( NULL ) { }
+  list_iterator(node *a) : ptr(a) { }
+
+  list_iterator& operator++() {
+    ptr = ptr->next;
+    return (*this);
+  }
+
+  list_iterator& operator--() {
+    ptr = ptr->prev;
+    return (*this);
+  }
+```
+
+- Has custom constructor that takes node pointer
+
+```cpp
+  list_iterator& operator++(int) {
+    list_iterator tmp(*this);
+    operator++();
+    return tmp;
+  }
+
+  list_iterator& operator--(int) {
+    list_iterator tmp(*this);
+    operator--();
+    return tmp;
+  }
+```
+
+- `operator++()` is an operator for #text(fill: orange)[`++it`]
+- `operator++(int)` is a syntax for #text(fill: purple)[`it++`]
+- `operator++(int)` delegates to `operator++()`
+- Same for `operator--()`
+
+```cpp
+  T& operator*() { return ptr->data; }
+  T* operator->() { return &(ptr->data); }
+
+  bool operator==(const list_iterator& other) {
+    return other.ptr == ptr;
+  }
+
+  bool operator!=(const list_iterator& other) {
+    return other.ptr != ptr;
+  }
+};
+```
+
+=== Other small functions
+```cpp
+iterator begin() {
+  return iterator(mHeader->next);
+}
+
+iterator end() {
+  return iterator(mHeader);
+}
+
+void clear() {
+  while (mSize > 0) erase(begin());
+}
+```
+
+```
+               |--------------------------------------------------\
+mSize mFirst   ▼  mHeader  |-------▼          |-------▼           /
+  [ 2,  ]  -► [prev,  , next]    [prev, 4, next]    [prev, 32, next]
+               /     ▲     ▲-------|     ▲    ▲-------|           ▲
+               \-----|-------------------|------------------------|
+                   end()              begin()
+```
+
+=== Insert & Erase
+```cpp
+iterator insert(iterator it, const T& element) {
+  node *n = new node(element, it.ptr->prev, it.ptr);
+  it.ptr->prev->next = n;
+  it.ptr->prev = n;
+  mSize++;
+  return iterator(n);
+}
+
+iterator erase(iterator it) {
+  iterator tmp(it.ptr->next);
+  it.ptr->prev->next = it.ptr->next;
+  it.ptr->next->prev = it.ptr->prev;
+  delete it.ptr;
+  mSize--;
+  return tmp;
+}
+```
+
+- Header make `insert` / `erase` very simple
