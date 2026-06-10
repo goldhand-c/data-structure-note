@@ -245,6 +245,7 @@ $
   align: horizon,
   columns: (0.2fr, 1fr, 1.2fr, 0.5fr, 0.6fr),
   [
+    #v(-8.6em)
     #scale(x: 60%, y: 60%)[
       #raw-render(
         ```dot
@@ -274,6 +275,7 @@ $
     ]
   ],
   [
+    #v(-4.3em)
     #scale(x: 60%, y: 60%)[
       #raw-render(
         ```dot
@@ -289,6 +291,7 @@ $
     ]
   ],
   [
+    #v(-0.1em)
     #scale(x: 60%, y: 60%)[
       #raw-render(
         ```dot
@@ -329,6 +332,7 @@ Hint: The answer is unique (There are exactly 1 way to draw a complete binary tr
   align: (center + horizon),
   columns: (0.4fr, 0.48fr, 0.8fr, 0.9fr),
   [
+    #v(-4.3em)
     #scale(x: 60%, y: 60%)[
       #raw-render(
         ```dot
@@ -343,6 +347,7 @@ Hint: The answer is unique (There are exactly 1 way to draw a complete binary tr
     ]
   ],
   [
+    #v(-4.3em)
     #scale(x: 60%, y: 60%)[
       #raw-render(
         ```dot
