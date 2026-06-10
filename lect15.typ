@@ -168,7 +168,7 @@ class node {
   [`0010`\ `000`],
 )
 
-Encoding "Never"\
+Encoding "never"\
 Fix-length #h(3.15em) #text(fill: red)[`0000`]#text(fill: blue)[`0001`]#text(fill: green)[`0110`]#text(fill: blue)[`0001`]#text(fill: purple)[`0100`]\
 Variable-length #h(1em) #text(fill: red)[`11`]#text(fill: blue)[`010`]#text(fill: green)[`1011`]#text(fill: blue)[`010`]#text(fill: purple)[`0011`]
 
@@ -202,16 +202,19 @@ Variable-length #h(1em) #text(fill: red)[`11`]#text(fill: blue)[`010`]#text(fill
     c = 1
     ```],
   [
-    #block(sticky: true)[#v(-5em)]
+    #block(sticky: true)[#v(-6.5em)]
     #align(center)[#scale(x: 65%, y: 65%)[
       #raw-render(
         ```dot
         digraph {
-          node[shape=circle];
-          edge [len=0.1,arrowhead=none];
-          "" -> " " -> "  " -> a;
-          "  " -> b;
-          "" -> c;
+          node[shape=square,fontsize=14,style="rounded"];
+          edge [len=0.1,arrowhead=normal];
+          "" -> " " [label="0"];
+          " " -> "   " [label="0"];
+          " " -> "  " [label="1"];
+          "  " -> a [label="0"];
+          "  " -> b [label="1"];
+          "" -> c [label="1"];
         }
         ```,
       )

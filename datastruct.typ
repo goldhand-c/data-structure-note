@@ -6,7 +6,7 @@
 #show math.equation: set text(font: "Concrete Math", number-type: "lining")
 
 // Automatically scale Thai characters to be larger (like MatchLowerCase)
-#show regex("[\u0e00-\u0e7f]+"): set text(size: 1.18em, font: "TH Sarabun New")
+#show regex("[\u0e00-\u0e7f]+"): set text(size: 11.8pt, font: "TH Sarabun New")
 
 #set page(numbering: "1")
 
