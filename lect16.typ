@@ -66,9 +66,9 @@ Binary Tree with value condition
       { rank=same; a; 45; }
       edge [len=0.1,arrowhead=none];
       splines=line;
-      45 -> 2 [arrowhead=normal,label="9 is more than 2, search right-subtree"];
+      45 -> 2 [arrowhead=normal,label="9 is more than 2,  \nsearch right-subtree "];
       2 -> 0 -> 1;
-      2 -> 20 [arrowhead=normal, label="9 is less than 20, search left-subtree"];
+      2 -> 20 [arrowhead=normal, label="9 is less than 20,\nsearch left-subtree"];
       20 -> 9 [arrowhead=normal,label="Found!"];
       20 -> 21;
       9 -> 3;
