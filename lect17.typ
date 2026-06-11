@@ -802,7 +802,7 @@ node *erase(const KeyT &key, node *r) {
             edge [arrowhead=none];
             r [label="!!r"];
             x [label="!x"];
-            r -> x [style=bold];
+            r -> x [penwidth=4];
             node [shape=house];
             r -> C;
             x -> A [style=bold];
@@ -860,7 +860,7 @@ node *erase(const KeyT &key, node *r) {
             r [label="r!!"];
             C [shape=house];
             x [label="x!"];
-            r -> x [style=bold];
+            r -> x [penwidth=4];
             node [shape=house];
             r -> C;
             x -> B;
@@ -916,7 +916,7 @@ node *erase(const KeyT &key, node *r) {
             edge [arrowhead=none];
             r [label="!!r"];
             x [label="x!"];
-            r -> x [style=bold];
+            r -> x [penwidth=4];
             node [shape=house];
             r -> D;
             x -> A;
@@ -946,7 +946,7 @@ node *erase(const KeyT &key, node *r) {
             edge [arrowhead=none];
             r [label="!!r"];
             y [label="!y"];
-            r -> y [style=bold];
+            r -> y [penwidth=4];
             node [shape=house];
             r -> D;
             y -> x [style=bold];
@@ -1004,7 +1004,7 @@ node *erase(const KeyT &key, node *r) {
             r [label="r!!"];
             node[shape=house];
             r -> A;
-            r -> x [style=bold];
+            r -> x [penwidth=4];
             x [shape=circle,label="!x"];
             x -> y [style=bold];
             y [shape=circle];
@@ -1034,7 +1034,7 @@ node *erase(const KeyT &key, node *r) {
             r [label="r!!"];
             node[shape=house];
             r -> A;
-            r -> y [style=bold];
+            r -> y [penwidth=4];
             y [shape=circle,label="y!"];
             y -> B;
             y -> x [style=bold];
