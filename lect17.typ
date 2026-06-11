@@ -9,25 +9,232 @@
 - การปรับต้นไม้เอวีแอลให้สูงสมดุล
 - กระบวนการหมุนปม
 
+=== ต้นไม้ค้นหาแบบทวิภาค
+- เวลาการทำงานเป็น $cal(O)(h)$
+- $floor(log_2 n) <= h <= n-1$
+- โชคดีทำงานเร็ว $cal(O)(log n)$, โชคร้ายทำงานเป็น $cal(O)(n)$
+
+#grid(
+  columns: (1fr,) * 3,
+  [
+    #block(sticky: true)[#v(-7em)]
+    #align(center)[#scale(x: 65%, y: 65%)[
+      #raw-render(
+        ```dot
+        digraph G {
+          node[style=invis];
+          a [label=""]; b[label=""];
+          node[style=normal,shape=circle];
+          1; 2; 6; 5; 4; 3;
+          node[style=invis];
+          c [label=""]; d [label=""]; e[label=""];
+          edge [arrowhead=none];
+          1 -> a [style=invis];
+          1 -> 2;
+          2 -> b [style=invis];
+          2 -> 6;
+          6 -> 5;
+          6 -> c [style=invis];
+          5 -> 4;
+          5 -> d [style=invis];
+          4 -> 3;
+          4 -> e [style=invis];
+        }
+        ```,
+      )
+    ]]
+  ],
+  [
+    #block(sticky: true)[#v(-4.5em)]
+    #align(center)[#scale(x: 65%, y: 65%)[
+      #raw-render(
+        ```dot
+        digraph G {
+          node[style=normal,shape=circle];
+          edge [arrowhead=none];
+          2 -> 1;
+          2 -> c [style=invis];
+          c [style=invis,label=""];
+          2 -> 6;
+          6 -> 4;
+          6 -> d [style=invis];
+          d [style=invis,label=""];
+          4 -> 3;
+          4 -> 5;
+        }
+        ```,
+      )
+    ]]
+  ],
+  [
+    #block(sticky: true)[#v(-3.3em)]
+    #align(center)[#scale(x: 65%, y: 65%)[
+      #raw-render(
+        ```dot
+        digraph G {
+          node[style=normal,shape=circle];
+          edge [arrowhead=none];
+          3 -> 2;
+          3 -> c [style=invis];
+          c [style=invis,label=""];
+          3 -> 5;
+          2 -> 1;
+          2 -> d [style=invis];
+          d [style=invis,label=""];
+          5 -> 4;
+          5 -> 6;
+        }
+        ```,
+      )
+    ]]
+  ],
+)
+#v(-5.5em)
+
 === ต้นไม้เอวีแอล
 - AVL = Binary Search Tree + กฎความสูงสมดุล
-- ต้นไม้ย่อยทุกต้นต้องเป็นไปตามกฎ $|h_L - h_R| <= 1$
-- AVL: Adelson-Velskii and Landis
 
-=== ตัวอย่างต้นไม้เอวีแอล
-ต้นไม้ว่าง (null) สูง $-1$
+#grid(
+  align: horizon,
+  columns: 2,
+  column-gutter: 20pt,
+  [
+    #block(sticky: true)[#v(-2.3em)]
+    #align(center)[#scale(x: 65%, y: 65%)[
+      #raw-render(
+        ```dot
+        digraph G {
+          node[style=normal,shape=circle];
+          edge [arrowhead=none];
+          e -> se;
+          e -> be;
 
-#text(size: 3em)[
-  add image for 17-1
+          subgraph cluster_A {
+            label = "h_L";
+            style = "filled";
+            color = "#aeadd2";
+
+            se [shape=house,label="น้อยกว่า e"];
+          }
+
+          subgraph cluster_B {
+            label = "h_R";
+            style = "filled";
+            color = "#c9c9fa";
+
+            be [shape=house,label="\nมากกว่า e\n"];
+          }
+        }
+        ```,
+      )
+    ]]
+  ],
+  text(size: 1.5em)[
+    $
+      |h_L - h_R| <= 1
+    $
+  ],
+)
+#v(-2em)
+
+#align(center)[
+  *ต้นไม้ย่อยทุกต้นต้องเป็นไปตามกฎ*
+  #v(0.5em)
+  #text(fill: red)[AVL]: #text(fill: red)[A]delson-#text(fill: red)[V]elskii and #text(fill: red)[L]andis
 ]
 
 
+=== ตัวอย่างต้นไม้เอวีแอล
+#grid(
+  columns: (1fr, 1.3fr, 2fr, 3fr),
+  [
+    #block(sticky: true)[#v(0em)]
+    #align(center)[#scale(x: 65%, y: 65%)[
+      #raw-render(
+        ```dot
+        digraph G {
+          node[style=normal,shape=circle];
+          edge [arrowhead=none];
+          1;
+          }
+        }
+        ```,
+      )
+    ]]
+  ],
+  [
+    #block(sticky: true)[#v(-1.3em)]
+    #align(center)[#scale(x: 65%, y: 65%)[
+      #raw-render(
+        ```dot
+        digraph G {
+          node[style=normal,shape=circle];
+          edge [arrowhead=none];
+          4 -> 1;
+          4 -> a [style=invis];
+          a [style=invis,label=""];
+          }
+        }
+        ```,
+      )
+    ]]
+  ],
+  [
+    #block(sticky: true)[#v(-2.5em)]
+    #align(center)[#scale(x: 65%, y: 65%)[
+      #raw-render(
+        ```dot
+        digraph G {
+          node[style=normal,shape=circle];
+          edge [arrowhead=none];
+          4 -> 1;
+          4 -> a [style=invis];
+          a [style=invis,label=""];
+          4 -> 6;
+          6 -> b [style=invis];
+          b [style=invis,label=""];
+          6 -> 9;
+          }
+        }
+        ```,
+      )
+    ]]
+  ],
+  [
+    #block(sticky: true)[#v(-3.8em)]
+    #align(center)[#scale(x: 65%, y: 65%)[
+      #raw-render(
+        ```dot
+        digraph G {
+          node[style=normal,shape=circle];
+          edge [arrowhead=none];
+          4 -> 1;
+          1 -> 0;
+          1 -> c [style=invis];
+          c [style=invis,label=""];
+          4 -> a [style=invis];
+          a [style=invis,label=""];
+          4 -> 6;
+          6 -> 5;
+          6 -> 9;
+          9 -> b [style=invis];
+          b [style=invis,label=""];
+          9 -> 11;
+          }
+        }
+        ```,
+      )
+    ]]
+  ],
+)
+#v(-5em)
+#align(center)[*ต้นไม้ว่าง (null) สูง $-1$*]
 
 == AVL Balance Rule
 
 === ต้นไม้ค้นหาแบบทวิภาคเอวีแอล
 //
-#block(sticky: true)[#v(-22em)]
+#block(sticky: true)[#v(-20em)]
 #align(center)[#scale(x: 15%, y: 30%)[
   #raw-render(
     ```dot
@@ -117,7 +324,6 @@
   )
 ]]
 #v(-20em)
-
 #align(center)[*ต้นไม้ค้นหาแบบทวิภาคที่สร้างจากข้อมูลสุ่ม 100 ตัว*]
 
 #block(sticky: true)[#v(-14em)]
@@ -200,7 +406,6 @@
   )
 ]]
 #v(-15em)
-
 #align(center)[*ต้นไม้เอวีแอลที่สร้างจากข้อมูลสุ่ม 100 ตัว*]
 
 === ต้นไม้เอวีแอลสูงเท่าใด ?
@@ -331,7 +536,6 @@
   )
 ]
 #v(-9.5em)
-
 $
   |F_h| = 1 + |F_(h-1)| + |F_(h-2)|\
   "Fibonacci Tree"
@@ -584,11 +788,294 @@ node *erase(const KeyT &key, node *r) {
 ```
 
 rebalance
-+ `r` เอียงซ้ายมากไป และ `x` (ลูกซ้าย) เอียงซ้าย $=>$ `rotate_left_child(r)`
-  - Pls add image
-+ `r` เอียงขวามากไป และ `x` (ลูกขวา) เอียงขวา $=>$ `rotate_right_child(r)`
-+ `r` เอียงซ้ายมากไป และ `x` (ลูกซ้าย) เอียงขวา $=>$ `rotate_right_child(r->left)  rotate_left_child(r)`
-+ `r` เอียงขวามากไป และ `x` (ลูกขวา) เอียงซ้าย $=>$ `rotate_left_child(r->right)  rotate_right_child(r)`
++ `r` เอียงซ้ายมากไป และ `x` เอียงซ้าย $=>$ `rotate_left_child(r)`
+  #grid(
+    align: horizon,
+    columns: (1fr, 0.2fr, 1fr),
+    [
+      #block(sticky: true)[#v(-2em)]
+      #align(center)[#scale(x: 65%, y: 65%)[
+        #raw-render(
+          ```dot
+          digraph G {
+            node[style=normal,shape=circle];
+            edge [arrowhead=none];
+            r [label="!!r"];
+            x [label="!x"];
+            r -> x [style=bold];
+            node [shape=house];
+            r -> C;
+            x -> A [style=bold];
+            A [label="\nA"]
+            x -> B;
+            }
+          }
+          ```,
+        )
+      ]]
+    ],
+    text(size: 1.5em)[
+      #v(-1em)
+      $
+        ==>
+      $
+    ],
+    [
+      #block(sticky: true)[#v(-2em)]
+      #align(center)[#scale(x: 65%, y: 65%)[
+        #raw-render(
+          ```dot
+          digraph G {
+            node[style=normal,shape=circle];
+            edge [arrowhead=none];
+            A [shape=house];
+            r [label="r"];
+            x [label="x"];
+            x -> r;
+            node [shape=house];
+            x -> A;
+            A [label="\nA"];
+            r -> B;
+            r -> C;
+            }
+          }
+          ```,
+        )
+      ]]
+    ],
+  )
+  #v(-4.5em)
++ `r` เอียงขวามากไป และ `x` เอียงขวา $=>$ `rotate_right_child(r)`
+  #grid(
+    align: horizon,
+    columns: (1fr, 0.2fr, 1fr),
+    [
+      #block(sticky: true)[#v(-2em)]
+      #align(center)[#scale(x: 65%, y: 65%)[
+        #raw-render(
+          ```dot
+          digraph G {
+            node[style=normal,shape=circle];
+            edge [arrowhead=none];
+            r [label="r!!"];
+            C [shape=house];
+            x [label="x!"];
+            r -> x [style=bold];
+            node [shape=house];
+            r -> C;
+            x -> B;
+            x -> A [style=bold];
+            A [label="\nA"];
+            }
+          }
+          ```,
+        )
+      ]]
+    ],
+    text(size: 1.5em)[
+      #v(-1em)
+      $
+        ==>
+      $
+    ],
+    [
+      #block(sticky: true)[#v(-2em)]
+      #align(center)[#scale(x: 65%, y: 65%)[
+        #raw-render(
+          ```dot
+          digraph G {
+            node[style=normal,shape=circle];
+            edge [arrowhead=none];
+            r [label="r"];
+            x [label="x"];
+            x -> r;
+            node [shape=house];
+            x -> A;
+            A [label="\nA"];
+            r -> C;
+            r -> B;
+            }
+          }
+          ```,
+        )
+      ]]
+    ],
+  )
+  #v(-4.5em)
++ `r` เอียงซ้ายมากไป และ `x` เอียงขวา $=>$ `rotate_right_child(r->left)  rotate_left_child(r)`
+  #grid(
+    align: horizon,
+    columns: (.9fr, 0.2fr, 1.1fr, 0.2fr, 1.6fr),
+    [
+      #block(sticky: true)[#v(-2em)]
+      #align(center)[#scale(x: 65%, y: 65%)[
+        #raw-render(
+          ```dot
+          digraph G {
+            node[style=normal,shape=circle];
+            edge [arrowhead=none];
+            r [label="!!r"];
+            x [label="x!"];
+            r -> x [style=bold];
+            node [shape=house];
+            r -> D;
+            x -> A;
+            x -> y [style=bold];
+            y [shape=circle];
+            y -> B;
+            y -> C;
+            }
+          }
+          ```,
+        )
+      ]]
+    ],
+    text(size: 1.5em)[
+      #v(-1em)
+      $
+        ==>
+      $
+    ],
+    [
+      #block(sticky: true)[#v(-2em)]
+      #align(center)[#scale(x: 65%, y: 65%)[
+        #raw-render(
+          ```dot
+          digraph G {
+            node[style=normal,shape=circle];
+            edge [arrowhead=none];
+            r [label="!!r"];
+            y [label="!y"];
+            r -> y [style=bold];
+            node [shape=house];
+            r -> D;
+            y -> x [style=bold];
+            y -> C;
+            x [shape=circle];
+            x -> A;
+            x -> B;
+            }
+          }
+          ```,
+        )
+      ]]
+    ],
+    text(size: 1.5em)[
+      #v(-1em)
+      $
+        ==>
+      $
+    ],
+    [
+      #block(sticky: true)[#v(-2em)]
+      #align(center)[#scale(x: 65%, y: 65%)[
+        #raw-render(
+          ```dot
+          digraph G {
+            node[style=normal,shape=circle];
+            edge [arrowhead=none];
+            y -> x;
+            y -> r;
+            node[shape=house];
+            x -> A;
+            x -> B;
+            r -> C;
+            r -> D;
+            }
+          }
+          ```,
+        )
+      ]]
+    ],
+  )
+  #v(-4.5em)
++ `r` เอียงขวามากไป และ `x` เอียงซ้าย $=>$ `rotate_left_child(r->right)  rotate_right_child(r)`
+  #grid(
+    align: horizon,
+    columns: (.9fr, 0.2fr, 1.1fr, 0.2fr, 1.6fr),
+    [
+      #block(sticky: true)[#v(-2em)]
+      #align(center)[#scale(x: 65%, y: 65%)[
+        #raw-render(
+          ```dot
+          digraph G {
+            node[style=normal,shape=circle];
+            edge [arrowhead=none];
+            r [label="r!!"];
+            node[shape=house];
+            r -> A;
+            r -> x [style=bold];
+            x [shape=circle,label="!x"];
+            x -> y [style=bold];
+            y [shape=circle];
+            y -> B;
+            y -> C;
+            x -> D;
+            }
+          }
+          ```,
+        )
+      ]]
+    ],
+    text(size: 1.5em)[
+      #v(-1em)
+      $
+        ==>
+      $
+    ],
+    [
+      #block(sticky: true)[#v(-2em)]
+      #align(center)[#scale(x: 65%, y: 65%)[
+        #raw-render(
+          ```dot
+          digraph G {
+            node[style=normal,shape=circle];
+            edge [arrowhead=none];
+            r [label="r!!"];
+            node[shape=house];
+            r -> A;
+            r -> y [style=bold];
+            y [shape=circle,label="y!"];
+            y -> B;
+            y -> x [style=bold];
+            x [shape=circle];
+            x -> C;
+            x -> D;
+            }
+          }
+          ```,
+        )
+      ]]
+    ],
+    text(size: 1.5em)[
+      #v(-1em)
+      $
+        ==>
+      $
+    ],
+    [
+      #block(sticky: true)[#v(-2em)]
+      #align(center)[#scale(x: 65%, y: 65%)[
+        #raw-render(
+          ```dot
+          digraph G {
+            node[style=normal,shape=circle];
+            edge [arrowhead=none];
+            y -> r;
+            y -> x;
+            node[shape=house];
+            r -> A;
+            r -> B;
+            x -> C;
+            x -> D;
+            }
+          }
+          ```,
+        )
+      ]]
+    ],
+  )
+  #v(-4.5em)
 
 ```cpp
 node *rebalance(node *r) {
