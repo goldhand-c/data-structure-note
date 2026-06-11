@@ -787,7 +787,7 @@ node *erase(const KeyT &key, node *r) {
 }
 ```
 
-rebalance
+=== rebalance
 + `r` เอียงซ้ายมากไป และ `x` เอียงซ้าย $=>$ `rotate_left_child(r)`
   #grid(
     align: horizon,
