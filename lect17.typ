@@ -571,8 +571,18 @@ $
           node[shape=circle];
           edge [len=0.1,arrowhead=none];
           2 -> 1 -> 0;
+          2 -> b [style=invis];
+          b [style=invis,label=""];
+          1 -> a [style=invis];
+          a [style=invis,label=""];
           2 -> 5 -> 3;
-          5 -> 6 -> 8 -> 9;
+          5 -> 6;
+          6 -> c [style=invis];
+          c [style=invis,label=""];
+          6 -> 8 [style=bold];
+          8 -> d [style=invis];
+          d [style=invis,label=""];
+          8 -> 9 [style=bold];
         }
         ```,
       )
@@ -595,9 +605,14 @@ $
           node[shape=circle];
           edge [len=0.1,arrowhead=none];
           2 -> 1 -> 0;
+          2 -> b [style=invis];
+          b [style=invis,label=""];
+          1 -> a [style=invis];
+          a [style=invis,label=""];
           2 -> 5 -> 3;
-          5 -> 8 -> 6;
-          8 -> 9;
+          5 -> 8;
+          8 -> 6 [style=bold];
+          8 -> 9 [style=bold];
         }
         ```,
       )
@@ -732,12 +747,12 @@ class node {
   ],
 
   [
-    `rotate_left_child(r)`\
+    ```cpp rotate_left_child(r)```\
     $h_r = max(2+5, 2+15, 1+99)$
   ],
   [],
   [
-    `rotate_right_child(r)`\
+    ```cpp rotate_right_child(r)```\
     $h_r = max(1+5, 2+15, 2+99)$
   ],
 )
@@ -788,7 +803,7 @@ node *erase(const KeyT &key, node *r) {
 ```
 
 === rebalance
-+ `r` เอียงซ้ายมากไป และ `x` เอียงซ้าย $=>$ `rotate_left_child(r)`
++ `r` เอียงซ้ายมากไป และ `x` เอียงซ้าย $=>$ ```cpp rotate_left_child(r);```
   #grid(
     align: horizon,
     columns: (1fr, 0.2fr, 1fr),
@@ -845,7 +860,7 @@ node *erase(const KeyT &key, node *r) {
     ],
   )
   #v(-4.5em)
-+ `r` เอียงขวามากไป และ `x` เอียงขวา $=>$ `rotate_right_child(r)`
++ `r` เอียงขวามากไป และ `x` เอียงขวา $=>$ ```cpp rotate_right_child(r);```
   #grid(
     align: horizon,
     columns: (1fr, 0.2fr, 1fr),
@@ -902,7 +917,7 @@ node *erase(const KeyT &key, node *r) {
     ],
   )
   #v(-4.5em)
-+ `r` เอียงซ้ายมากไป และ `x` เอียงขวา $=>$ `rotate_right_child(r->left)  rotate_left_child(r)`
++ `r` เอียงซ้ายมากไป และ `x` เอียงขวา $=>$ ```cpp rotate_right_child(r->left);  rotate_left_child(r);```
   #grid(
     align: horizon,
     columns: (.9fr, 0.2fr, 1.1fr, 0.2fr, 1.6fr),
@@ -989,7 +1004,7 @@ node *erase(const KeyT &key, node *r) {
     ],
   )
   #v(-4.5em)
-+ `r` เอียงขวามากไป และ `x` เอียงซ้าย $=>$ `rotate_left_child(r->right)  rotate_right_child(r)`
++ `r` เอียงขวามากไป และ `x` เอียงซ้าย $=>$ ```cpp rotate_left_child(r->right);  rotate_right_child(r);```
   #grid(
     align: horizon,
     columns: (.9fr, 0.2fr, 1.1fr, 0.2fr, 1.6fr),
