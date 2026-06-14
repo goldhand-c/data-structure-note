@@ -626,7 +626,7 @@ iterator end() {
 }
 ```
 
-=== อย่าลืม default constructor
+=== *อย่าลืม* default constructor
 ```cpp
 class unordered_map {
   ...
