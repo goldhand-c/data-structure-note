@@ -201,9 +201,10 @@ read     output     stack
  +          2
  3          2         +
  *         2 3        +
-           2 3       * +
-          2 3 *       +
-         2 3 * +
+ 4         2 3       * +
+          2 3 4      * +
+         2 3 4 *
+        2 3 4 * +
 ```
 
 === Code to Compare Priority
