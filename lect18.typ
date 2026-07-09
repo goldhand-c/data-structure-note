@@ -275,7 +275,7 @@ $
   1 - (366/366)(365/366)(364/366) dots.c ((366-k+1)/366) > 0.5
 $
 
-#align(center)[#image("Birthday_paradox_approximation.svg", width: 67%)]
+#align(center)[#image("images/Birthday_paradox_approximation.svg", width: 67%)]
 
 == CP::unordered_map
 

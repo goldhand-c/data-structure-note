@@ -803,294 +803,298 @@ node *erase(const KeyT &key, node *r) {
 ```
 
 === rebalance
-+ `r` เอียงซ้ายมากไป และ `x` เอียงซ้าย $=>$ ```cpp rotate_left_child(r);```
-  #grid(
-    align: horizon,
-    columns: (1fr, 0.2fr, 1fr),
-    [
-      #block(sticky: true)[#v(-2em)]
-      #align(center)[#scale(x: 65%, y: 65%)[
-        #raw-render(
-          ```dot
-          digraph G {
-            node[style=normal,shape=circle];
-            edge [arrowhead=none];
-            r [label="!!r"];
-            x [label="!x"];
-            r -> x [penwidth=4];
-            node [shape=house];
-            r -> C;
-            x -> A [style=bold];
-            A [label="\nA"]
-            x -> B;
++ #block(sticky: true)[`r` เอียงซ้ายมากไป และ `x` เอียงซ้าย $=>$ ```cpp rotate_left_child(r);```
+    #grid(
+      align: horizon,
+      columns: (1fr, 0.2fr, 1fr),
+      [
+        #block(sticky: true)[#v(-4em)]
+        #align(center)[#scale(x: 65%, y: 65%)[
+          #raw-render(
+            ```dot
+            digraph G {
+              node[style=normal,shape=circle];
+              edge [arrowhead=none];
+              r [label="!!r"];
+              x [label="!x"];
+              r -> x [penwidth=4];
+              node [shape=house];
+              r -> C;
+              x -> A [style=bold];
+              A [label="\nA"]
+              x -> B;
+              }
             }
-          }
-          ```,
-        )
-      ]]
-    ],
-    text(size: 1.5em)[
-      #v(-1em)
-      $
-        ==>
-      $
-    ],
-    [
-      #block(sticky: true)[#v(-2em)]
-      #align(center)[#scale(x: 65%, y: 65%)[
-        #raw-render(
-          ```dot
-          digraph G {
-            node[style=normal,shape=circle];
-            edge [arrowhead=none];
-            A [shape=house];
-            r [label="r"];
-            x [label="x"];
-            x -> r;
-            node [shape=house];
-            x -> A;
-            A [label="\nA"];
-            r -> B;
-            r -> C;
+            ```,
+          )
+        ]]
+      ],
+      text(size: 1.5em)[
+        #v(-2.5em)
+        $
+          ==>
+        $
+      ],
+      [
+        #block(sticky: true)[#v(-4em)]
+        #align(center)[#scale(x: 65%, y: 65%)[
+          #raw-render(
+            ```dot
+            digraph G {
+              node[style=normal,shape=circle];
+              edge [arrowhead=none];
+              A [shape=house];
+              r [label="r"];
+              x [label="x"];
+              x -> r;
+              node [shape=house];
+              x -> A;
+              A [label="\nA"];
+              r -> B;
+              r -> C;
+              }
             }
-          }
-          ```,
-        )
-      ]]
-    ],
-  )
-  #v(-4.5em)
-+ `r` เอียงขวามากไป และ `x` เอียงขวา $=>$ ```cpp rotate_right_child(r);```
-  #grid(
-    align: horizon,
-    columns: (1fr, 0.2fr, 1fr),
-    [
-      #block(sticky: true)[#v(-2em)]
-      #align(center)[#scale(x: 65%, y: 65%)[
-        #raw-render(
-          ```dot
-          digraph G {
-            node[style=normal,shape=circle];
-            edge [arrowhead=none];
-            r [label="r!!"];
-            C [shape=house];
-            x [label="x!"];
-            r -> x [penwidth=4];
-            node [shape=house];
-            r -> C;
-            x -> B;
-            x -> A [style=bold];
-            A [label="\nA"];
+            ```,
+          )
+        ]]
+      ],
+    )]
+  #v(-2em)
++ #block(sticky: true)[`r` เอียงขวามากไป และ `x` เอียงขวา $=>$ ```cpp rotate_right_child(r);```
+    #grid(
+      align: horizon,
+      columns: (1fr, 0.2fr, 1fr),
+      [
+        #block(sticky: true)[#v(-4em)]
+        #align(center)[#scale(x: 65%, y: 65%)[
+          #raw-render(
+            ```dot
+            digraph G {
+              node[style=normal,shape=circle];
+              edge [arrowhead=none];
+              r [label="r!!"];
+              C [shape=house];
+              x [label="x!"];
+              r -> x [penwidth=4];
+              node [shape=house];
+              r -> C;
+              x -> B;
+              x -> A [style=bold];
+              A [label="\nA"];
+              }
             }
-          }
-          ```,
-        )
-      ]]
-    ],
-    text(size: 1.5em)[
-      #v(-1em)
-      $
-        ==>
-      $
-    ],
-    [
-      #block(sticky: true)[#v(-2em)]
-      #align(center)[#scale(x: 65%, y: 65%)[
-        #raw-render(
-          ```dot
-          digraph G {
-            node[style=normal,shape=circle];
-            edge [arrowhead=none];
-            r [label="r"];
-            x [label="x"];
-            x -> r;
-            node [shape=house];
-            x -> A;
-            A [label="\nA"];
-            r -> C;
-            r -> B;
+            ```,
+          )
+        ]]
+      ],
+      text(size: 1.5em)[
+        #v(-2.5em)
+        $
+          ==>
+        $
+      ],
+      [
+        #block(sticky: true)[#v(-4em)]
+        #align(center)[#scale(x: 65%, y: 65%)[
+          #raw-render(
+            ```dot
+            digraph G {
+              node[style=normal,shape=circle];
+              edge [arrowhead=none];
+              r [label="r"];
+              x [label="x"];
+              x -> r;
+              node [shape=house];
+              x -> A;
+              A [label="\nA"];
+              r -> C;
+              r -> B;
+              }
             }
-          }
-          ```,
-        )
-      ]]
-    ],
-  )
-  #v(-4.5em)
-+ `r` เอียงซ้ายมากไป และ `x` เอียงขวา $=>$ ```cpp rotate_right_child(r->left);  rotate_left_child(r);```
-  #grid(
-    align: horizon,
-    columns: (.9fr, 0.2fr, 1.1fr, 0.2fr, 1.6fr),
-    [
-      #block(sticky: true)[#v(-2em)]
-      #align(center)[#scale(x: 65%, y: 65%)[
-        #raw-render(
-          ```dot
-          digraph G {
-            node[style=normal,shape=circle];
-            edge [arrowhead=none];
-            r [label="!!r"];
-            x [label="x!"];
-            r -> x [penwidth=4];
-            node [shape=house];
-            r -> D;
-            x -> A;
-            x -> y [style=bold];
-            y [shape=circle];
-            y -> B;
-            y -> C;
+            ```,
+          )
+        ]]
+      ],
+    )]
+  #v(-2em)
++ #block(
+    sticky: true,
+  )[`r` เอียงซ้ายมากไป และ `x` เอียงขวา $=>$ ```cpp rotate_right_child(r->left);  rotate_left_child(r);```
+    #grid(
+      align: horizon,
+      columns: (.9fr, 0.2fr, 1.1fr, 0.2fr, 1.6fr),
+      [
+        #block(sticky: true)[#v(-4em)]
+        #align(center)[#scale(x: 65%, y: 65%)[
+          #raw-render(
+            ```dot
+            digraph G {
+              node[style=normal,shape=circle];
+              edge [arrowhead=none];
+              r [label="!!r"];
+              x [label="x!"];
+              r -> x [penwidth=4];
+              node [shape=house];
+              r -> D;
+              x -> A;
+              x -> y [style=bold];
+              y [shape=circle];
+              y -> B;
+              y -> C;
+              }
             }
-          }
-          ```,
-        )
-      ]]
-    ],
-    text(size: 1.5em)[
-      #v(-1em)
-      $
-        ==>
-      $
-    ],
-    [
-      #block(sticky: true)[#v(-2em)]
-      #align(center)[#scale(x: 65%, y: 65%)[
-        #raw-render(
-          ```dot
-          digraph G {
-            node[style=normal,shape=circle];
-            edge [arrowhead=none];
-            r [label="!!r"];
-            y [label="!y"];
-            r -> y [penwidth=4];
-            node [shape=house];
-            r -> D;
-            y -> x [style=bold];
-            y -> C;
-            x [shape=circle];
-            x -> A;
-            x -> B;
+            ```,
+          )
+        ]]
+      ],
+      text(size: 1.5em)[
+        #v(-2.5em)
+        $
+          ==>
+        $
+      ],
+      [
+        #block(sticky: true)[#v(-4em)]
+        #align(center)[#scale(x: 65%, y: 65%)[
+          #raw-render(
+            ```dot
+            digraph G {
+              node[style=normal,shape=circle];
+              edge [arrowhead=none];
+              r [label="!!r"];
+              y [label="!y"];
+              r -> y [penwidth=4];
+              node [shape=house];
+              r -> D;
+              y -> x [style=bold];
+              y -> C;
+              x [shape=circle];
+              x -> A;
+              x -> B;
+              }
             }
-          }
-          ```,
-        )
-      ]]
-    ],
-    text(size: 1.5em)[
-      #v(-1em)
-      $
-        ==>
-      $
-    ],
-    [
-      #block(sticky: true)[#v(-2em)]
-      #align(center)[#scale(x: 65%, y: 65%)[
-        #raw-render(
-          ```dot
-          digraph G {
-            node[style=normal,shape=circle];
-            edge [arrowhead=none];
-            y -> x;
-            y -> r;
-            node[shape=house];
-            x -> A;
-            x -> B;
-            r -> C;
-            r -> D;
+            ```,
+          )
+        ]]
+      ],
+      text(size: 1.5em)[
+        #v(-2.5em)
+        $
+          ==>
+        $
+      ],
+      [
+        #block(sticky: true)[#v(-4em)]
+        #align(center)[#scale(x: 65%, y: 65%)[
+          #raw-render(
+            ```dot
+            digraph G {
+              node[style=normal,shape=circle];
+              edge [arrowhead=none];
+              y -> x;
+              y -> r;
+              node[shape=house];
+              x -> A;
+              x -> B;
+              r -> C;
+              r -> D;
+              }
             }
-          }
-          ```,
-        )
-      ]]
-    ],
-  )
-  #v(-4.5em)
-+ `r` เอียงขวามากไป และ `x` เอียงซ้าย $=>$ ```cpp rotate_left_child(r->right);  rotate_right_child(r);```
-  #grid(
-    align: horizon,
-    columns: (.9fr, 0.2fr, 1.1fr, 0.2fr, 1.6fr),
-    [
-      #block(sticky: true)[#v(-2em)]
-      #align(center)[#scale(x: 65%, y: 65%)[
-        #raw-render(
-          ```dot
-          digraph G {
-            node[style=normal,shape=circle];
-            edge [arrowhead=none];
-            r [label="r!!"];
-            node[shape=house];
-            r -> A;
-            r -> x [penwidth=4];
-            x [shape=circle,label="!x"];
-            x -> y [style=bold];
-            y [shape=circle];
-            y -> B;
-            y -> C;
-            x -> D;
+            ```,
+          )
+        ]]
+      ],
+    )]
+  #v(-2em)
++ #block(
+    sticky: true,
+  )[`r` เอียงขวามากไป และ `x` เอียงซ้าย $=>$ ```cpp rotate_left_child(r->right);  rotate_right_child(r);```
+    #grid(
+      align: horizon,
+      columns: (.9fr, 0.2fr, 1.1fr, 0.2fr, 1.6fr),
+      [
+        #block(sticky: true)[#v(-4em)]
+        #align(center)[#scale(x: 65%, y: 65%)[
+          #raw-render(
+            ```dot
+            digraph G {
+              node[style=normal,shape=circle];
+              edge [arrowhead=none];
+              r [label="r!!"];
+              node[shape=house];
+              r -> A;
+              r -> x [penwidth=4];
+              x [shape=circle,label="!x"];
+              x -> y [style=bold];
+              y [shape=circle];
+              y -> B;
+              y -> C;
+              x -> D;
+              }
             }
-          }
-          ```,
-        )
-      ]]
-    ],
-    text(size: 1.5em)[
-      #v(-1em)
-      $
-        ==>
-      $
-    ],
-    [
-      #block(sticky: true)[#v(-2em)]
-      #align(center)[#scale(x: 65%, y: 65%)[
-        #raw-render(
-          ```dot
-          digraph G {
-            node[style=normal,shape=circle];
-            edge [arrowhead=none];
-            r [label="r!!"];
-            node[shape=house];
-            r -> A;
-            r -> y [penwidth=4];
-            y [shape=circle,label="y!"];
-            y -> B;
-            y -> x [style=bold];
-            x [shape=circle];
-            x -> C;
-            x -> D;
+            ```,
+          )
+        ]]
+      ],
+      text(size: 1.5em)[
+        #v(-2.5em)
+        $
+          ==>
+        $
+      ],
+      [
+        #block(sticky: true)[#v(-4em)]
+        #align(center)[#scale(x: 65%, y: 65%)[
+          #raw-render(
+            ```dot
+            digraph G {
+              node[style=normal,shape=circle];
+              edge [arrowhead=none];
+              r [label="r!!"];
+              node[shape=house];
+              r -> A;
+              r -> y [penwidth=4];
+              y [shape=circle,label="y!"];
+              y -> B;
+              y -> x [style=bold];
+              x [shape=circle];
+              x -> C;
+              x -> D;
+              }
             }
-          }
-          ```,
-        )
-      ]]
-    ],
-    text(size: 1.5em)[
-      #v(-1em)
-      $
-        ==>
-      $
-    ],
-    [
-      #block(sticky: true)[#v(-2em)]
-      #align(center)[#scale(x: 65%, y: 65%)[
-        #raw-render(
-          ```dot
-          digraph G {
-            node[style=normal,shape=circle];
-            edge [arrowhead=none];
-            y -> r;
-            y -> x;
-            node[shape=house];
-            r -> A;
-            r -> B;
-            x -> C;
-            x -> D;
+            ```,
+          )
+        ]]
+      ],
+      text(size: 1.5em)[
+        #v(-2.5em)
+        $
+          ==>
+        $
+      ],
+      [
+        #block(sticky: true)[#v(-4em)]
+        #align(center)[#scale(x: 65%, y: 65%)[
+          #raw-render(
+            ```dot
+            digraph G {
+              node[style=normal,shape=circle];
+              edge [arrowhead=none];
+              y -> r;
+              y -> x;
+              node[shape=house];
+              r -> A;
+              r -> B;
+              x -> C;
+              x -> D;
+              }
             }
-          }
-          ```,
-        )
-      ]]
-    ],
-  )
-  #v(-4.5em)
+            ```,
+          )
+        ]]
+      ],
+    )]
+  #v(-2em)
 
 ```cpp
 node *rebalance(node *r) {
