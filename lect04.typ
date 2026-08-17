@@ -209,7 +209,7 @@ int main() {
 === Set Iterator
 - We cannot do `s.begin() + x`
   - Because, going to the next element (which is the _successor_) in set is not as fast as vector, c++ forbids `begin() + x`
-    - alternatively, you can use ```cpp auto it = s.begin(); for (int i = 0; i < 0; i++) {it++;} ```
+    - alternatively, you can use ```cpp auto it = s.begin(); for (int i = 0; i < s.size(); i++) {it++;} ```
   - We cannot _compare by `>` or `<`_
 - We can still use `it++` or `it--` to go to the next or previous (_successor_ or _predecessor_) or x
 
@@ -295,7 +295,7 @@ int main() {
 
   int k = 99;
   map<int,string>::iterator it;
-  if ((it = m.find()) != m.end()) {
+  if ((it = m.find(k)) != m.end()) {
     cout << "Key " << it->first << " is mapped to " << it->second << endl;
   } else {
     cout << "Key " << k << " does not exist in m." << endl;

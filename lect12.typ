@@ -188,25 +188,27 @@ When counting instruction, it is usually OK to focus on #text(fill: orange)[most
 
 === Measurement by Growth Rate
 #v(0.5em)
-#grid(
-  columns: (1fr, 1fr),
-  row-gutter: 1em,
-  [*What?*], [*Why?*],
-  [
-    - Growth rate = how much resource usage growth with respect to change of input
-      - Resource usage = number of instruction used
-      - Input = size of data
-    - Emphasizes long term trend
-  ],
-  [
-    - System independent
-      - The result can be used to predict behavior on any system
-    - Focus on change of resource usage with respect to size of input
-    - Can regard small detail
-      - Simple to calculate
-      - Applicable in real world
-  ],
-)
+#block(breakable: false)[
+  #grid(
+    columns: (1fr, 1fr),
+    row-gutter: 1em,
+    [*What?*], [*Why?*],
+    [
+      - Growth rate = how much resource usage growth with respect to change of input
+        - Resource usage = number of instruction used
+        - Input = size of data
+      - Emphasizes long term trend
+    ],
+    [
+      - System independent
+        - The result can be used to predict behavior on any system
+      - Focus on change of resource usage with respect to size of input
+      - Can regard small detail
+        - Simple to calculate
+        - Applicable in real world
+    ],
+  )
+]
 
 == Asymtotic Notation
 Classification of growth rate

@@ -76,6 +76,7 @@ bool search(string words[], int n, string w) {
     if (words[i] == w) return true;
     n++;
   }
+  return false;
 }
 
 void printWord(string filename) {

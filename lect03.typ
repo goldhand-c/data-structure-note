@@ -264,7 +264,7 @@ int main() {
   v.insert( v.begin()+3, 2); // 1, 8, 8, 2, 8
   v.insert( v.end(), 3);     // 1, 8, 8, 2, 8, 3
   print(v);
-  v.erase(v.begin();         // 8, 8, 2, 8, 3
+  v.erase(v.begin());         // 8, 8, 2, 8, 3
   v.erase(v.begin()+2);      // 8, 8, 8, 3
   print(v);
   v.pop_back();              // 8, 8, 8

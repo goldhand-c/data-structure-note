@@ -117,11 +117,11 @@ now x is 4
 
 === Infix and Postfix Expressions
 - infix (เติมกลาง)
-  - `a + b * c / d - 2`, `(a + b) * c / (d - 2)`
+  - `a + b * c / d - 2, (a + b) * c / (d - 2)`
   - use order of operations
   - use parentheses
 - postfix (เติมหลัง)
-  - `a b c * d / + 2 -`, `a b + c * d 2 - /`
+  - `a b c * d / + 2 -, a b + c * d 2 - /`
   - order is from left to right
   - parentheses may be omitted
 
@@ -173,7 +173,7 @@ string infix2postfix(string &infix) {
       s.push(token);         // then push new operator
     }
   }
-  while (!s.empty()) {postfix += s.top(); s,pop();}
+  while (!s.empty()) {postfix += s.top(); s.pop();}
   return postfix;
 }
 ```
@@ -226,7 +226,7 @@ string infix2postfix(string &infix) {
       s.push(token);
     }
   }
-  while (!s.empty()) {postfix += s.top(); s,pop();}
+  while (!s.empty()) {postfix += s.top(); s.pop();}
   return postfix;
 }
 ```
