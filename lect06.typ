@@ -120,7 +120,7 @@ int getDigit(int v, int k) {
 // d = number of digits
 void radixSort(vector<int> &data, int d) {
   queue<int> q[base];
-  for (int k=0; k<dl k++) {
+  for (int k=0; k<d; k++) {
     for (auto &x : data) {
       q[getDigit(x,k)].push(x);
     for (int i=0,j=0; i<base; i++) {

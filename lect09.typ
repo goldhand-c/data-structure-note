@@ -523,11 +523,9 @@ void erase(iterator it) {
     - `insert_by_pos`
     - `erase_by_pos`
     - `erase_by_value`
-    - `constains`
+    - `contains`
     - `index_of`
 - Read in #link("https://github.com/nattee/data-class/blob/master/stl-cp/vector.h")[#text(fill: blue)[here]]
-
-#box(fill: yellow, inset: 5pt)[Will do this part later]
 
 === Analysis of how many data is copied by push_back
 - When full, `push_back` have to move all data to a new dynamic array

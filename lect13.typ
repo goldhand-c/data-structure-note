@@ -174,9 +174,15 @@ void push(const T& e) {  // upper_bound is 𝒪(log(n))
   - #text(fill: blue)[Nodes (vertex, vertices)] are #text(fill: blue)[things] we want to connect
   - #text(fill: purple)[Edges] are pairs, each pair is a #text(fill: purple)[connectivity] between two nodes
 - Graph $G = (V, E)$ where $V$ is a set of nodes and $E$ is a set of edges
-
-$V = {"\"Mo Chit\"", "\"Siam\"", "\"Asok\"", "\"Sala Daeng\"", "\"Tha Phra\"", "\"Lak Song\"", "\"Bang Wa\"", "\"Kheha\""}$\
-$E = {("\"Mo Chit\"", "\"Asok\""), ("\"Mo Chit\"", "\"Siam\""), ("\"Tha Phra\"", "\"Mo Chit\""), ("\"Sala Daeng\"", "\"Tha Phra\""), ...}$
+  #v(.2em)
+  - $V = {$ \ #v(.2em)
+    $#h(2em) "\"Mo Chit\"", " \"Siam\"", " \"Asok\"", " \"Sala Daeng\"", " \"Tha Phra\"", " \"Lak Song\"", " \"Bang Wa\"", " \"Kheha\"" \
+    }$
+  #v(.5em)
+  - $E = {$ \ #v(.5em)
+    $#h(2em) ("\"Mo Chit\"", "\"Asok\""), " " ("\"Mo Chit\"", "\"Siam\""), \
+    #h(2em) ("\"Tha Phra\"", "\"Mo Chit\""), " " ("\"Sala Daeng\"", "\"Tha Phra\""), "  . . ." \
+    }$
 
 === Tree
 - A special kind of graph

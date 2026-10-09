@@ -326,7 +326,18 @@ $
 - We know that $c > 0, k > 0$
 - Does $f(n)$ grow slower than $g(n)$?
 
-#box(fill: yellow, inset: 5pt)[Will do this part later]
+// #box(fill: yellow, inset: 5pt)[Will do this part later]
+
+Show that $lg^c n$ is $cal(O)(n)$;
+$
+  lim_(n -> oo) (lg^c n) / n & = lim_(n -> oo) (c lg^(c-1) n) / n \
+                             & = lim_(n -> oo) (c(c-1) lg^(c-2) n) / n \
+                             & dots.v \
+                             & = lim_(n -> oo) c! / n \
+                             & = 0
+$
+
+Since $n$ is $cal(o)(n^k)$ for $k > 1$, therefore $lg^c n$ is $cal(o)(n^k)$.
 
 == Big Theta
 
