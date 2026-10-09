@@ -175,7 +175,7 @@ void push(const T& e) {  // upper_bound is 𝒪(log(n))
   - #text(fill: purple)[Edges] are pairs, each pair is a #text(fill: purple)[connectivity] between two nodes
 - Graph $G = (V, E)$ where $V$ is a set of nodes and $E$ is a set of edges
   #v(.2em)
-  - $V = {$ \ #v(.2em)
+  - $V = {$ \ #v(.5em)
     $#h(2em) "\"Mo Chit\"", " \"Siam\"", " \"Asok\"", " \"Sala Daeng\"", " \"Tha Phra\"", " \"Lak Song\"", " \"Bang Wa\"", " \"Kheha\"" \
     }$
   #v(.5em)
