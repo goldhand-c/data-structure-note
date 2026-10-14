@@ -246,7 +246,7 @@ $
 - Complete tree = the tree must be filled with every possible node at every level (except the deepest level which must be filled as far to the left as possible)
   - Blank tree is considered a complete binary tree
 
-#block(sticky: true)[#v(-4em)]
+#block(sticky: true)[#v(-3em)]
 #grid(
   align: horizon,
   columns: (0.2fr, 1fr, 1.2fr, 0.5fr, 0.6fr),
@@ -328,12 +328,14 @@ $
 #v(-2em, weak: true)
 #h(1em) OK #h(8em) OK #h(9em) Not binary #h(2.5em) Not complete (at depth 1) #h(2.5em) OK
 
+#v(1em)
+
 === Exercise
 - Draw a Complete Binary Tree that has 4, 5, 8, 10 nodes
 
 Hint: The answer is unique (There are exactly 1 way to draw a complete binary tree of size k)
 
-#block(sticky: true)[#v(-4em)]
+#block(sticky: true)[#v(-5em)]
 #grid(
   align: (center + horizon),
   columns: (0.4fr, 0.48fr, 0.8fr, 0.9fr),
@@ -412,6 +414,7 @@ Hint: The answer is unique (There are exactly 1 way to draw a complete binary tr
 == Binary Heap
 Use Complete Binary Tree to make `priority_queue`
 
+#v(.5em)
 #align(center)[#scale(x: 70%, y: 70%)[
   #raw-render(
     ```dot
@@ -423,6 +426,7 @@ Use Complete Binary Tree to make `priority_queue`
     ```,
   )
 ]]
+#v(.5em)
 
 === Binary Heap
 - We use #text(fill: green)[Complete Binary Tree] to store data
@@ -447,7 +451,7 @@ Use Complete Binary Tree to make `priority_queue`
     ```,
   )
 ]]
-#v(-2em, weak: true)
+#v(-1em, weak: true)
 
 === Adding data to Binary Heap
 - Maintain Binary Heapness
@@ -470,7 +474,8 @@ Use Complete Binary Tree to make `priority_queue`
       75 -> 50 -> 40 -> 35;
       40 -> 36;
       50 -> 3 -> 2;
-      3 -> "+60";
+      60 [style=bold,color=green,fontcolor=darkgreen];
+      3 -> 60;
       75 -> 65 -> 4;
       65 -> 10;
     }
@@ -492,10 +497,13 @@ Use Complete Binary Tree to make `priority_queue`
     digraph {
       node[shape=circle];
       edge [len=0.1,arrowhead=none];
-      75 -> "*60" -> 40 -> 35;
+      2, 40;
+      60, 50, 3 [style=bold];
+      75 -> 60 -> 40 -> 35;
       40 -> 36;
-      "*60" -> "*50" -> 2;
-      "*50" -> "*3";
+      60 -> 50 [style=bold];
+      50 -> 2;
+      50 -> 3 [style=bold];
       75 -> 65 -> 4;
       65 -> 10;
     }
@@ -520,10 +528,11 @@ See that: after each swap, the swapped nodes does not violate with #text(fill: g
     digraph {
       node[shape=circle];
       edge [len=0.1,arrowhead=none];
-      "*3" -> 60 -> 40 -> 35;
+      3 [style=bold,color=red,fontcolor=red];
+      3 -> 60 -> 40 -> 35;
       40 -> 36;
       60 -> 50 -> 2;
-      "*3" -> 65 -> 4;
+      3 -> 65 -> 4;
       65 -> 10;
     }
     ```,
@@ -545,11 +554,15 @@ See that: after each swap, the swapped nodes does not violate with #text(fill: g
     digraph {
       node[shape=circle];
       edge [len=0.1,arrowhead=none];
-      "*65" -> 60 -> 40 -> 35;
+      65 [style=bold];
+      65 -> 60 -> 40 -> 35;
       40 -> 36;
       60 -> 50 -> 2;
-      "*65" -> "*10" -> 4;
-      "*10" -> 3;
+      10 [style=bold];
+      65 -> 10 [style=bold];
+      10 -> 4;
+      3 [style=bold];
+      10 -> 3 [style=bold];
     }
     ```,
   )
@@ -580,12 +593,17 @@ See that: after each swap, the swapped nodes does not violate with #text(fill: g
   #raw-render(
     ```dot
     digraph {
-      edge [len=0.1,arrowhead=none];
-      "0: 75" -> "1: 50" -> "3: 40" -> "7: 35";
-      "3: 40" -> "8: 36";
-      "1: 50" -> "4: 3" -> "9: 2";
-      "0: 75" -> "2: 13" -> "5: 1";
-      "2: 13" -> "6: 10";
+      node [shape=circle];
+      edge [arrowhead=none,fontcolor=blue];
+      75 -> 50 [label=1];
+      50 -> 40 [label=3];
+      40 -> 35 [label=7];
+      40 -> 36 [label=8];
+      50 -> 3 [label=4];
+      3 -> 2 [label=9];
+      75 -> 13 [label=2];
+      13 -> 1 [label=5];
+      13 -> 10 [label=6];
     }
     ```,
   )
@@ -709,24 +727,28 @@ void fixUp(size_t idx) {
 }
 ```
 
+#v(1em)
+```cpp
+mData: p = #, idx = @, tmp = 60
 ```
-mData  p = /, idx = *, tmp = 60
+```
    0   1   2   3   4   5   6   7   8   9  10
-[ 75, 50, 13, 40, /3,  1, 10, 35, 36,  2,*60]
-
-[ 75,/50, 13, 40, *3,  1, 10, 35, 36,  2,  3]
-
-[/75,*50, 13, 40, 50,  1, 10, 35, 36,  2,  3]
-
-tmp = 60 < 75 = mData[p] => break;mData[idx] = tmp;
-[ 75, 60, 13, 40, 50,  1, 10, 35, 36,  2,  3]
+```
+```cpp
+[ 75, 50, 13, 40, #3,  1, 10, 35, 36,  2,@60]
+                                               {60 > 3}
+[ 75,#50, 13, 40, @3,  1, 10, 35, 36,  2,  3]  mData[10] = 3;
+                                               {60 > 50}
+[#75,@50, 13, 40, 50,  1, 10, 35, 36,  2,  3]  mData[4] = 50;
+                                               {60 < 75} -> break;
+[ 75,@60, 13, 40, 50,  1, 10, 35, 36,  2,  3]  mData[1] = 60;
 ```
 
 === mLess
 - `priority_queue` allows a custom comparator
-- Custom comparator $X$
-  - We must be able to #text(fill: purple)[$X(a,b)$] where $X$ will comapre $a$ and $b$ and `return` `true` only when $a$ is less than $b$
-  - $X$ is a #text(fill: green)[variable] that implement `operator()`
+- Custom comparator `X`
+  - We must be able to #text(fill: purple)[`X(a,b)`] where `X` will comapre $a$ and $b$ and `return` `true` only when $a$ is less than $b$
+  - `X` is a #text(fill: green)[variable] that implement `operator()`
 
 #v(1em)
 
