@@ -344,7 +344,7 @@ class huffman_tree {
 
     class node_comparator {
       public:
-        bool operator()(const huffman_node *a, huffman_node *b) {
+        bool operator()(const huffman_node *a, const huffman_node *b) {
           return a->freq > b->freq;
         }
     };
@@ -406,7 +406,7 @@ int recur1(int n) {
 === Why recursion?
 - Much simpler code
   - When the task is right
-  - Recursion is natural for several mathematical model that is recursi
+  - Recursion is natural for several mathematical model that is recursive
 - Comparing to a normal loop, recursion has the same growth rate but recursion might take more time because function call is costlier than a loop
 
 === More Example
@@ -453,7 +453,7 @@ int recur1(int n) {
   - A tree with a root
     - Both children of the root must be a binary tree
     - Each child is called left-subtree and right-subtree
-- Since binary tree can be defined recursively, operation on a binary tree can be naturallly written as a recursion
+- Since binary tree can be defined recursively, operation on a binary tree can be naturally written as a recursion
 
 === Subtree
 - For any node
@@ -550,7 +550,7 @@ class node {
 };
 
 int get_height(node* n) {
-  if (n == NULL) return 0;
+  if (n == NULL) return -1;
   return 1 + std::max(get_height(n->left),
                       get_height(n->right));
 }
@@ -562,9 +562,9 @@ class node {
   public:
     int data;
     node *left, *right;
-    node() : data(0), left(NULL), right(NULL);
+    node() : data(0), left(NULL), right(NULL) { }
     node(int data, node *left, node *right)
-      : data(data), left(left), right(right);
+      : data(data), left(left), right(right) { }
 };
 
 node* copy(node *n) {
@@ -572,6 +572,7 @@ node* copy(node *n) {
   node *lc = copy(n->left);
   node *rc = copy(n->right);
   node *result = new node(n->data, lc, rc);
+  return result;
 }
 ```
 
