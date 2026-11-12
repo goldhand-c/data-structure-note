@@ -422,15 +422,15 @@ Observation: multiplicative and addition constants in $f(n)$ can usually be igno
       let x-min = 0.01
       plot.add(domain: (x-min, x-max), x => x * calc.ln(x), style: (stroke: red), label: $ n ln(n) #v(1.3em) $)
       plot.add(domain: (x-min, x-max), x => x, style: (stroke: green), label: $ n #v(1.3em) $)
-      plot.add(domain: (1, x-max), x => calc.pow(calc.ln(x), 2), style: (stroke: purple), label: $ ln^2(n) #v(1.3em) $)
       plot.add(domain: (x-min, x-max), x => calc.pow(x, 0.5), style: (stroke: black), label: $ n^(0.5) #v(1.3em) $)
+      plot.add(domain: (1, x-max), x => calc.pow(calc.ln(x), 2), style: (stroke: purple), label: $ ln^2(n) #v(1.3em) $)
       plot.add(domain: (x-min, x-max), x => calc.ln(x), style: (stroke: blue), label: $ ln(n) #v(1.3em) $)
     },
   )
 })
 
 $ln^2(n)$ grows slower than $n^0.5$. At around $n = 56000$, $ln^2(n)$ is less than $n^0.5$.\
-$x^4$ grows slower than $2^n$. At around $n = 16$, $x^4$ is less than $2^n$.
+$n^4$ grows slower than $2^n$. At around $n = 16$, $n^4$ is less than $2^n$.
 
 === Beware
 - It is #text(fill: red)[wrong] to say that `vector::insert` is $Theta(n)$
@@ -488,7 +488,7 @@ void ensureCapacity(size_t capacity) {
 // (b) can also be 0 to n
 // Best case 0 + 0
 // Worst case n + n
-// vector::push_back is O(n)
+// vector::push_back is 𝒪(n)
 ```
 
 === Another Definition for $cal(O)$ and $Theta$

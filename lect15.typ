@@ -24,6 +24,8 @@ Practicing Pointer & Recursive
           node[shape=circle];
           edge [len=0.1,arrowhead=none];
           12 -> 3 -> 4 -> 5;
+          "" [style=invis];
+          3 -> "" [style=invis];
           12 -> 2;
           4 -> 6;
         }
@@ -32,16 +34,17 @@ Practicing Pointer & Recursive
     ]]
   ],
   [
-    #block(sticky: true)[#v(-5em)]
+    #block(sticky: true)[#v(-4em)]
     #align(center)[#scale(x: 65%, y: 65%)[
       #raw-render(
         ```dot
         digraph {
-          node[shape=ellipse];
+          node[shape=rectangle];
           root;
-          node [shape=rectangle]
-          edge [len=0.1,arrowhead=none];
-          root -> "[left, 10, right]";
+          node [shape=ellipse]
+          edge [len=0.1,arrowsize=0.5];
+          { rank=same; root -> "[left, 10, right]" [minlen=2]; }
+          edge [arrowhead=none];
           "[left, 10, right]" -> "[NULL, 10, right]";
           "[left, 10, right]" -> "[NULL, 10, NULL]";
           "[NULL, 10, right]" -> "NULL";
@@ -54,7 +57,7 @@ Practicing Pointer & Recursive
     ]]
   ],
   [
-    #v(2em)
+    #v(2.5em)
     - A rooted tree where each node have at most two children
     - Tree Node is very similar to a linked list node
   ],
@@ -63,8 +66,8 @@ Practicing Pointer & Recursive
 
 ```
 node
-  left data right
-  NULL  10  NULL
+   left  data  right
+  [NULL,  10,  NULL]
 
 ```
 
@@ -117,7 +120,7 @@ class node {
     #v(1em)
     16 different characters\
     Fix-length needs $4 times 86 = 344$ bits\
-    Variable Length need 327 bits
+    Variable Length need $327$ bits
   ],
 )
 
@@ -208,7 +211,7 @@ Variable-length #h(1em) #text(fill: red)[`11`]#text(fill: blue)[`010`]#text(fill
         ```dot
         digraph {
           node[shape=square,fontsize=14,style="rounded"];
-          edge [len=0.1,arrowhead=normal];
+          edge [len=0.1,arrowhead=normal,arrowsize=0.5,fontcolor="blue"];
           "" -> " " [label="0"];
           " " -> "   " [label="0"];
           " " -> "  " [label="1"];
@@ -237,6 +240,7 @@ Variable-length #h(1em) #text(fill: red)[`11`]#text(fill: blue)[`010`]#text(fill
         ranksep=0.3;
         splines=line;
         node [shape=box, style="rounded", fontname="Arial",fontsize=14];
+        edge [arrowsize=0.5,fontcolor="blue"];
 
         // --- INTERNAL NODES ---
         N70 [label="70"];
@@ -359,7 +363,7 @@ class huffman_tree {
     void build_tree(vector<huffman_node*> data) {
       priority_queue<huffman_node*, vector<huffman_node*>, node_comparator> pq;
       for (auto &x : data) pq.push(x);
-      while (pq.size > 1) {
+      while (pq.size() > 1) {
         huffman_node *right = pq.top(); pq.pop();
         huffman_node *left = pq.top(); pq.pop();
         pq.push(new huffman_node('*', left->freq+right->freq, left, right));
@@ -369,13 +373,12 @@ class huffman_tree {
   public:
     huffman_tree(string s) {
       map<char, int> count;
-      for (auto &c : s) {
+      for (auto &c : s)
         count[c]++;  // word count
       vector<huffman_node*> nodes;
       for (auto &x : count)
         nodes.push_back(new huffman_node(x.first, x.second, NULL, NULL));
       build_tree(nodes);
-      }
     }
 };
 ```
@@ -418,7 +421,7 @@ int recur1(int n) {
     ```cpp
     void print_range1(int step, int goal) {
       if (step < goal) {
-        std::cout << step << "";
+        std::cout << step << " ";
         print_range1(step+1, goal);
       }
     }
@@ -434,7 +437,7 @@ int recur1(int n) {
     void print_range2(int step, int goal) {
       if (step < goal) {
         print_range2(step+1, goal);
-        std::cout << step << "";
+        std::cout << step << " ";
       }
     }
     ```
@@ -463,27 +466,28 @@ int recur1(int n) {
 #align(center)[#scale(x: 65%, y: 65%)[
   #raw-render(
     ```dot
-    digraph G {
-      node[shape=circle,style=filled,fillcolor=white];
-      edge [len=0.1,arrowhead=none];
+     digraph G {
+        node [shape=circle, style=filled, fillcolor=white];
+        edge [len=0.1, arrowhead=none];
 
-      // Node outside the group
-      12 -> 3 -> 4 -> 5;
-      4 -> 6;
-      12 -> 2;
+        12 -> 3;
+        12 -> 2;
 
-      // Subgraph name MUST start with "cluster_"
-      subgraph cluster_process_1 {
-          label = "Left-subtree of 12";  // Text label for the cluster
-          color = blue;                   // Border color
-          style = filled;                 // Allows background color fill
-          fillcolor = "#abf7b1";          // Background color
+        subgraph cluster_process_1 {
+            label = "Left-subtree of 12";
+            color = blue;
+            style = filled;
+            fillcolor = "#abf7b1";
 
-          // Nodes belonging to this group
-          3; 4; 5; 6;
+            3 -> 4;
+            3 -> inv_3_right [style=invis];
+            inv_3_right [style=invis, shape=point, width=0];
+            4 -> 5;
+            4 -> 6;
+
+            3; 4; 5; 6;
         }
     }
-
     ```,
   )
 ]]
@@ -520,12 +524,14 @@ int get_size(node* n) {
       node[shape=box];
       root;
       node[shape=circle,style=filled,fillcolor=white];
-      edge [len=0.1,arrowhead=none];
+      edge [len=0.1,arrowhead=none,fontcolor="blue"];
       { rank=same; root; 12; }
 
       // Node outside the group
-      root -> 12 [label="6=1+4+1"];
+      root -> 12 [label="6=1+4+1",arrowhead=normal,arrowsize=0.5];
       12 -> 3 [label="4=1+0+3"];
+      "" [style=invis];
+      3 -> "" [style=invis];
       3 -> 4 [label="3=1+1+1"];
       4 -> 5 [label="1=1+0+0"];
       4 -> 6 [label="1=1+0+0"];
@@ -617,10 +623,12 @@ node* copy(node *n) {
           node[shape=square]
           a;
           node[shape=circle,style=filled,fillcolor=white];
-          edge [len=0.1,arrowhead=none];
+          edge [len=0.1,arrowhead=none,arrowsize=0.5];
           { rank=same; a; 12; }
-          a -> 12 [minlen=2,arrowhead=normal];
+          a -> 12 [minlen=2.5,arrowhead=normal];
           12 -> 3 -> 4 -> 5;
+          "" [style=invis];
+          3 -> "" [style=invis];
           4 -> 6;
           12 -> 2;
         }
@@ -648,18 +656,19 @@ class huffman_tree {
     class huffman_node { };
     class node_comparator { };
     huffman_node *root;
+
   public:
     void print(huffman_node *n, string s) {
       if (n->is_leaf()) {
         cout << n->letter << ": " << s << endl;
       } else {
-        print(n->left,s+"0");
-        print(n->right,s+"1");
+        print(n->left, s+"0");
+        print(n->right, s+"1");
       }
     }
 
     void print() {
-      print(root,"");
+      print(root, "");
     }
 };
 ```
@@ -682,7 +691,6 @@ class huffman_tree {
     }
 
   public:
-
     ~huffman_tree() {
       delete_node(root);
     }

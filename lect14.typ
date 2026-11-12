@@ -30,7 +30,7 @@ Faster insert and erase but slower access
 
 === v0.1 node
 - Simple object that stores a #text(fill: green)[data] and a #text(fill: orange)[link to another node]
-- #text(fill: purple)[NULL] is a special value for any pointer that points to nowhere
+- #text(fill: purple)[`NULL`] is a special value for any pointer that points to nowhere
   - Draw as a ground
 
 ```cpp
@@ -109,20 +109,20 @@ class list {
 };
 ```
 
-- Node is a inner class
+- Node is an inner class
 
 === Insertion
 ```
 
 Linked List                                   x
-mSize mFirst     node                         ▼
-  [ 4,  ]  -► [20, next] -► [ 3, next] -► [16, next] -► [77, NULL]
+mSize mFirst      node                        ▼
+  [ 4,  ]  ─► [20, next] ─► [ 3, next] ─► [16, next] ─► [77, NULL]
 
-  d -► [99, NULL]
+  d ─► [99, NULL]
 ```
 
 - To insert a value `99` before value `16`, let `x` be a pointer that point to the node of `16`
-  + Create a `new node d` containing a data to be inserted
+  + Create a new node `d` containing a data to be inserted
   + Change pointer #text(fill: orange)[of a node] #text(fill: purple)[before `x`] (which points to `x`) to point to `d` instead
   + Make pointer of `d` points to `x`
 
@@ -136,10 +136,10 @@ d->next = x;
 ```
 
                                            x
-mSize mFirst     node                      ▼
-  [ 4,  ]  -► [20, next] -► [ 3, d] -► [16, next] -► [77, NULL]
-                                 ▼         ▲
-                          d --> [99, x] ---|
+mSize mFirst      node                     ▼
+  [ 4,  ]  ─► [20, next] ─► [ 3, d] ─► [16, next] ─► [77, NULL]
+                                  ▼        ▲
+                          d ─► [99, x] ──┘
 ```
 
 === Erase
@@ -154,10 +154,10 @@ delete x;
 ```
 
 ```
-                                              x
-mSize mFirst     node                         ▼
-  [ 4,  ]  -► [20, next] -► [ 3, next]                  [77, NULL]
-                                  |_______________________▲
+mSize mFirst      node
+  [ 4,  ]  ─► [20, next] ─► [ 3, next]                  [77, NULL]
+                                  │                         ▲
+                                  └──────────────────┘
 ```
 
 == Doubly Linked List
@@ -184,9 +184,9 @@ while (p != NULL && p->next != x) p = p->next;
 
 ```
                                           x
-mSize mFirst        node    |------▼      ▼     |------▼
-  [ 4,  ]  -► [NULL, 20, next]    [prev, 16, next]    [prev, 77, NULL]
-                            ▲______|            ▲______|
+mSize mFirst        node    ┌─────▼     ▼     ┌─────▼
+  [ 4,  ]  ─► [NULL, 20, next]    [prev, 16, next]    [prev, 77, NULL]
+                            ▲─────┘           ▲─────┘
 ```
 
 === Insert in Doubly Linked List
@@ -194,17 +194,17 @@ mSize mFirst        node    |------▼      ▼     |------▼
 CP::node<int> *tmp =
   new CP::node<int> (99, NULL, NULL);
 tmp->next = x;
-tmp->prev = x.prev;
+tmp->prev = x->prev;
 x->prev->next = tmp;
 x->prev = tmp;
 ```
 ```
                                           x
-mSize mFirst        node                  ▼     |------▼
-  [ 4,  ]  -► [NULL, 20, next]    [prev, 16, next]    [prev, 77, NULL]
-                          | ▲          ▲ |      ▲______|
-                          ▼ |          | ▼
-                  tmp -► [prev , 99, next]
+mSize mFirst        node                  ▼     ┌─────▼
+  [ 4,  ]  ─► [NULL, 20, next]    [prev, 16, next]    [prev, 77, NULL]
+                          │ ▲          ▲ │      ▲─────┘
+                          ▼ │          │ ▼
+                  tmp ─► [prev , 99, next]
 ```
 
 === Erase in Doubly List
@@ -221,10 +221,10 @@ If we write ```cpp x->prev->next = x->next;```, it means that the previous node'
 In other words, it successfully skips `x` from the sequence.
 
 ```
-                                          x
-mSize mFirst        node    |-------------▼------------▼
-  [ 4,  ]  -► [NULL, 20, next]                        [prev, 77, NULL]
-                            ▲__________________________|
+
+mSize mFirst        node    ┌────────────────────▼
+  [ 4,  ]  ─► [NULL, 20, next]                        [prev, 77, NULL]
+                            ▲────────────────────┘
 ```
 
 == Circular Linked List
@@ -234,7 +234,7 @@ mSize mFirst        node    |-------------▼------------▼
 - But, adding data at the end (`push_back`) is still hard
   - Need to get `X` to point to the last element
   - `push_back` is popular in real world
-  - Right now we have only `push_back` (fast addition to the first)
+  - Right now we have only `push_front` (fast addition to the first)
 - Also some minor issue about the #text(fill: green)[code cleanliness]
   - `insert` / `erase` the first / last node
 
@@ -247,11 +247,10 @@ CP::node<int> *first = mLast->next;
 ```
 
 ```
-
-  /------------------------------------------------------------\
-  \-► [20, next] -► [3, next] -► [16, next] -► [77, next] --/
+  ┌──────────────────────────────────────────────┐
+  └─► [20, next] ─► [3, next] ─► [16, next] ─► [77, next] ──┘
                                                         ▲
-                                                        |
+                                                        │
                                                    mSize mLast
                                                      [ 4,  ]
 ```
@@ -266,11 +265,11 @@ CP::node<int> *last = mFirst->prev;
 ```
 
 ```
-                |---------------------------------------------------\
-mSize mFirst    ▼   node    |------▼            |------▼            /
+                ┌──────────────────────────────────────┐
+mSize mFirst    ▼   node    ┌─────▼           ┌─────▼           │
   [ 4,  ]  -► [prev, 20, next]    [prev, 16, next]    [prev, 77, next]
-                /           ▲______|            ▲______|            ▲
-                \---------------------------------------------------|
+                │           ▲─────┘           ▲─────┘           ▲
+                └──────────────────────────────────────┘
 ```
 
 == Linked List with Header
@@ -281,7 +280,7 @@ mSize mFirst    ▼   node    |------▼            |------▼            /
   - Assume we have a pointer to that node
 
 ```cpp
-// assume thta s points to the second node
+// assume that s points to the second node
 CP::node<int> *tmp =
   new CP::node<int>(99,NULL,NULL);
 tmp->next = s;
@@ -346,7 +345,7 @@ void remove(const &T e) {
 ```
 
 === Linked List with Header
-- Add a special node that will not be used to stored data
+- Add a special node that will not be used to store data
 
 === Simpler Code with Header
 ```cpp
@@ -449,7 +448,7 @@ class node {
 
   // copy constructor
   list(list<T>& a) : mHeader( new node() ), mSize( 0 ) {
-    for (iterator it = a,begin(); it != a.end(); it++) {
+    for (iterator it = a.begin(); it != a.end(); it++) {
       push_back(*it);
     }
   }
@@ -461,7 +460,7 @@ class node {
     return *this;
   }
 
-  ~this() {
+  ~list() {
     clear();
     delete mHeader;
   }
@@ -568,11 +567,11 @@ void clear() {
 ```
 
 ```
-               |--------------------------------------------------\
-mSize mFirst   ▼  mHeader  |-------▼          |-------▼           /
+                ┌─────────────────────────────────────┐
+mSize mFirst    ▼  mHeader  ┌─────▼         ┌─────▼            │
   [ 2,  ]  -► [prev,  , next]    [prev, 4, next]    [prev, 32, next]
-               /     ▲     ▲-------|     ▲    ▲-------|           ▲
-               \-----|-------------------|------------------------|
+                │    ▲      ▲─────┘    ▲     ▲─────┘           ▲
+                └───│──────────────│──────────────────┘
                    end()              begin()
 ```
 

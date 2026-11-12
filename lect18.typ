@@ -28,13 +28,13 @@
 - จัดเก็บข้อมูลที่ชนกันไว้ในรายการเดียวกัน
 
 ```
-0 [ ] --▶ < 14, 7 >
-1 [ ] --▶ < 22, 1 >
+0 [ ] -─▶ < 14, 7 >
+1 [ ] -─▶ < 22, 1 >
 2 [ ] --‖
-3 [ ] --▶ < 3, 38 >          h(x)= x % 7
-4 [ ] --▶ < 46 >
-5 [ ] --▶ < 40 >
-6 [ ] --▶ < 6, 13, 27, 20 >
+3 [ ] -─▶ < 3, 38 >          h(x)= x % 7
+4 [ ] -─▶ < 46 >
+5 [ ] -─▶ < 40 >
+6 [ ] -─▶ < 6, 13, 27, 20 >
 ```
 
 === *การกระจายข้อมูล*
@@ -61,11 +61,11 @@
     #text(size: 8pt)[
       ```
       0 [ ] --‖
-      1 [ ] --▶ < 401, 321, 105, 185, 129 >
+      1 [ ] -─▶ < 401, 321, 105, 185, 129 >
       2 [ ] --‖
       3 [ ] --‖
       4 [ ] --‖
-      5 [ ] --▶ < 180, 260, 60, 252, 92, 764,
+      5 [ ] -─▶ < 180, 260, 60, 252, 92, 764,
       6 [ ] --‖              4, 76, 28, 108 >
       7 [ ] --‖
                     h(x) = x % 8
@@ -76,16 +76,16 @@
     #text(size: 8pt)[
       ```
                 h(x) = x % 10
-        0 [ ] --▶ < 180, 260, 80 >
-        1 [ ] --▶ < 401, 321 >
-        2 [ ] --▶ < 252, 92 >
+        0 [ ] -─▶ < 180, 260, 80 >
+        1 [ ] -─▶ < 401, 321 >
+        2 [ ] -─▶ < 252, 92 >
         3 [ ] --‖
-        4 [ ] --▶ < 764, 4 >
-        5 [ ] --▶ < 105, 185 >
-        6 [ ] --▶ < 76 >
+        4 [ ] -─▶ < 764, 4 >
+        5 [ ] -─▶ < 105, 185 >
+        6 [ ] -─▶ < 76 >
         7 [ ] --‖
-        8 [ ] --▶ < 28, 108 >
-        9 [ ] --▶ < 129 >
+        8 [ ] -─▶ < 28, 108 >
+        9 [ ] -─▶ < 129 >
       ```
     ]
   ],
@@ -252,7 +252,7 @@ unordered_map<Book,string,BookHasher,BookEqual> m;
 m[Book("Data Structures", 1, 200)] = "reserved";
 m[Book("Algorithm",       5, 200)] = "available";
 
-Book b1("Data Structures, 1");
+Book b1("Data Structures", 1);
 Book b2("algorithm", 5);
 
 cout << m[b1] << endl;  // "reserved"
@@ -282,18 +282,18 @@ $
 === `CP::unordered_map<KeyT, MappedT>`
 ```cpp
 bucket count = 10
-[ ] -▶ [ * , * ] <-- bucket size = 2
-[ ] -▶ [ * , * ]
-[ ] -▶ [ * , * ]
-[ ] -▶ [ * ,(*)] -▶ pair<key, mappedValue>
-[ ] -▶ [ * , * ]
-[ ] -▶ [ * , * ]
-[ ] -▶ [ ] <-- bucket size = 0
-[ ] -▶ [ ]
-[ ] -▶ [ * , * , * ]
-[ ] -▶ [ * , * , * ]
+[ ] ─▶ [ * , * ] ◀── bucket size = 2
+[ ] ─▶ [ * , * ]
+[ ] ─▶ [ * , * ]
+[ ] ─▶ [ * ,(*)] ─▶ pair<key, mappedValue>
+[ ] ─▶ [ * , * ]
+[ ] ─▶ [ * , * ]
+[ ] ─▶ [ ] ◀── bucket size = 0
+[ ] ─▶ [ ]
+[ ] ─▶ [ * , * , * ]
+[ ] ─▶ [ * , * , * ]
  ▲       ▲ vector< ValueT > = BucketT
- |
+ │
  vector< vector< ValueT > > = vector< BucketT >
 
  typedef pair<KeyT, MappedT> ValueT;
@@ -480,8 +480,8 @@ class unordered_map {
 void rehash(size_t m) {
   if ( m <= mBuckets.size() &&
       load_factor() <= max_load_factor() ) return;
-  m = std::max(m, (size_t)(0.5+mSize/mMaxLoadFactor));
-  m = *std::lower_bound(PRIMES, PRIMES+N_PRIMES, m);1
+  m = std::max(m, (size_t)(0.5+mSize/mMaxLoadFactor));  // always round up
+  m = *std::lower_bound(PRIMES, PRIMES+N_PRIMES, m);
 
   vector<ValueT> tmp;
   for (auto& val : *this) tmp.push_back(val);
@@ -535,14 +535,14 @@ public:
 
 === ++iterator
 ```cpp
-              vector<ValueT>::iterator
-                        ValueIterator
+                     vector<ValueT>::iterator
+                         ValueIterator
 vector<BucketT>::iterator      ▼
-BucketIterator ▶  [ ] -▶ [ * , * , * ]
-                  [ ] -▶ [ ]
-                  [ ] -▶ [ * , * ]
-                  [ ] -▶ [ ]
-                  [ ] -▶ [ * ]
+    BucketIterator ▶  [ ] ─▶ [ * , * , * ]
+                      [ ] ─▶ [ ]
+                      [ ] ─▶ [ * , * ]
+                      [ ] ─▶ [ ]
+                      [ ] ─▶ [ * ]
 ```
 
 ```cpp
@@ -553,27 +553,28 @@ protected:
   BucketIterator mEndBucketsItr;  // เก็บ mBuckets.end() ตอนสร้าง iterator
 
   void to_next_data() {
-    while(mCurBucketItr != mEndBucketsItr &&
-          mCurValueItr == mCurBucketItr->end())
-    mCurBucketItr++;
-    if (mCurBucketItr == mEndBucketsItr) break;
-    mCurValueItr = mCurBucketItr->begin();
+    while( mCurBucketItr != mEndBucketsItr &&
+           mCurValueItr == mCurBucketItr->end() ) {
+      mCurBucketItr++;
+      if (mCurBucketItr == mEndBucketsItr) break;
+      mCurValueItr = mCurBucketItr->begin();
+    }
   }
 
 public:
-  hashtable_iterator& operator++() {  // it++
+  hashtable_iterator& operator++() {  // ++it
     mCurValueItr++;
     to_next_data();
     return (*this);  // ++(++it) it เลื่อนสองครั้ง
   }
-  hashtable_iterator operator++(int) {  // ++it
+  hashtable_iterator operator++(int) {  // it++
     hashtable_iterator tmp(*this);
     operator++();
     return tmp;  // (it++)++ it เลื่อนครั้งเดียว!
   }
 ```
 
-=== `*it` *กับ* `it->`
+=== \*it กับ it->
 ```cpp
   typedef ValueT & reference;
   typedef ValueT * pointer;
@@ -587,7 +588,7 @@ public:
   }
 ```
 
-=== `it1 == it2` *กับ* `it1 != it2`
+=== it1 == it กับ it1 != it2
 ```cpp
   bool operator==(const hashtable_iterator &other) {
     return mCurValueItr == other.mCurValueItr;
@@ -611,7 +612,7 @@ public:
 };
 ```
 
-=== begin() && end()
+=== begin() & end()
 ```cpp
 iterator begin() {
   return iterator( mBuckets.begin()->begin(),
@@ -673,7 +674,9 @@ class unordered_map {
     [26,   ,   ,   , 17,  4, 32,  7, 43,   ,   , 11, 12]
     [26, 24,   ,   , 17,  4, 32,  7, 43,   ,   , 11, 12] // 11 ไม่ว่าง วนไปลง 1 แทน
   ```
-- ให้ $h_j(x)$ คือช่องที่ probe หลังจากชนครั้งที่ $j$
+  #v(1em)
+
+- ให้ $h_j (x)$ คือช่องที่ probe หลังจากชนครั้งที่ $j$
 - $h_0(x) = h(x)$ คือช่องที่ hash เริ่มต้น (home address)
 $
   h_j (x) = (h(x) + j) % m #h(5em)
@@ -835,6 +838,7 @@ class unordered_map {
       return mBuckets.begin()+pos;
     }
     pair<iterator, bool> insert(const ValueT& val) {
+      pair<iterator, bool> result;
       size_t pos = find_position(val.first);
       if (mBuckets[pos].available()) {
         BucketIterator it = insert_to_position(val, pos);
@@ -944,21 +948,21 @@ $
   h_j (x) = (h_(j-1) (x) - 2j - 1) % m
 $
 
+ใช้ $h(x) = x % 13$ แล้วเพิ่มข้อมูลที่มีคีย์ตามลำดับดังนี้
 ```
-  ใช้ h(x) = x % 13 แล้วเพิ่มข้อมูลที่มีคีย์ตามลำดับดังนี้
       4  5  8  0  7  1  17
 
     0   1   2   3   4   5   6   7   8   9  10  11  12
   [ 0,  1,   ,   ,  4,  5,   ,  7,  8,   ,   ,   ,   ]
   เพิ่ม 17 ลง 4 แต่ไม่ว่าง
-                    ▲ +1
-                      - ▲ +3
-                          - - - - - ▲+5
-                                      - - - - - - - >
-  > ▲ +7
-      - - - - - - - - - - - - - ▲ +9
-                                  - - - - - - - - - >
-  > - - - - - - ▼
+                    ▼ +1
+                    └─▶ ▼ +3
+                         └──────▶ ▼ +5
+                                    └────────────▶
+  ▶ ▼ +7
+    └──────────────────▶ ▲ +9
+                                └───────────────▶
+  ▶ ───────▶ ▼
   [ 0,  1,   , 17,  4,  5,   ,  7,  8,   ,   ,   ,   ]
 ```
 
@@ -1046,12 +1050,12 @@ $
 === *เมื่อตารางมีขนาดเป็นจำนวนเฉพาะ*
 - การตรวจกำลังสองจะดูอย่างน้อยครึ่งหนึ่งของตาราง
 - ดังนั้น ถ้า #text(fill: red)[$"load factor" <= 1\/2$] ก็สบายใจว่า จะหาช่องว่างพบ เมื่อเพิ่มข้อมูล
-- พิสูจน์ : ให้ $0<=i<=j<=floor(m\/2)$ ถ้าข้างบนไม่จริง ต้องมีการ probe ครั้งที่ $i$ และ $j$ ที่ดูช่องซ้ำกัน
+- พิสูจน์ : ให้ $0<=i<j<=floor(m\/2)$ ถ้าข้างบนไม่จริง ต้องมีการ probe ครั้งที่ $i$ และ $j$ ที่ดูช่องซ้ำกัน
 $
-   h(x) + j^2 & equiv h(x) + i^2 & mod m \
-          j^2 & equiv i^2        & mod m \
-  (j^2 - i^2) & equiv 0          & mod m \
-   (j-i)(j+i) & equiv 0          & mod m
+   h(x) + j^2 & equiv h(x) + i^2 thin & (mod m) \
+          j^2 & equiv i^2             & (mod m) \
+  (j^2 - i^2) & equiv 0               & (mod m) \
+   (j-i)(j+i) & equiv 0               & (mod m)
 $
 - เป็นไปไม่ได้: $(j-i)$ ไม่เป็น $0$, $(j+i)$ ก็ไม่เป็น $m$\
   อีกทั้ง $(j-i)(j+i)%m != 0$ เพราะทั้งสองพจน์ $< m$ และ $m$ เป็นจำนวนเฉพาะ

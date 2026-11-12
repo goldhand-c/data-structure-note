@@ -14,13 +14,14 @@
 - $floor(log_2 n) <= h <= n-1$
 - โชคดีทำงานเร็ว $cal(O)(log n)$, โชคร้ายทำงานเป็น $cal(O)(n)$
 
-#grid(
-  columns: (1fr,) * 3,
-  [
-    #block(sticky: true)[#v(-7em)]
-    #align(center)[#scale(x: 65%, y: 65%)[
-      #raw-render(
-        ```dot
+#v(1.5em)
+#block(height: 12cm)[
+  #grid(
+    columns: (1fr,) * 3,
+    [
+      #block(sticky: true)[#v(-7em)]
+      #align(center)[#scale(x: 65%, y: 65%)[
+        #raw-render(```dot
         digraph G {
           node[style=invis];
           a [label=""]; b[label=""];
@@ -40,15 +41,13 @@
           4 -> 3;
           4 -> e [style=invis];
         }
-        ```,
-      )
-    ]]
-  ],
-  [
-    #block(sticky: true)[#v(-4.5em)]
-    #align(center)[#scale(x: 65%, y: 65%)[
-      #raw-render(
-        ```dot
+        ```)
+      ]]
+    ],
+    [
+      #block(sticky: true)[#v(-4.5em)]
+      #align(center)[#scale(x: 65%, y: 65%)[
+        #raw-render(```dot
         digraph G {
           node[style=normal,shape=circle];
           edge [arrowhead=none];
@@ -62,15 +61,13 @@
           4 -> 3;
           4 -> 5;
         }
-        ```,
-      )
-    ]]
-  ],
-  [
-    #block(sticky: true)[#v(-3.3em)]
-    #align(center)[#scale(x: 65%, y: 65%)[
-      #raw-render(
-        ```dot
+        ```)
+      ]]
+    ],
+    [
+      #block(sticky: true)[#v(-3.3em)]
+      #align(center)[#scale(x: 65%, y: 65%)[
+        #raw-render(```dot
         digraph G {
           node[style=normal,shape=circle];
           edge [arrowhead=none];
@@ -84,12 +81,11 @@
           5 -> 4;
           5 -> 6;
         }
-        ```,
-      )
-    ]]
-  ],
-)
-#v(-5.5em)
+        ```)
+      ]]
+    ],
+  )]
+#v(-4.5em)
 
 === *ต้นไม้เอวีแอล*
 - AVL = Binary Search Tree + กฎความสูงสมดุล
@@ -323,11 +319,10 @@
     ```,
   )
 ]]
-#v(-20em)
+#v(-19em)
 #align(center)[*ต้นไม้ค้นหาแบบทวิภาคที่สร้างจากข้อมูลสุ่ม 100 ตัว*]
 
-#pagebreak()
-#block(sticky: true)[#v(-14em)]
+#block(sticky: true)[#v(-13em)]
 #align(center)[#scale(x: 15%, y: 30%)[
   #raw-render(
     ```dot
@@ -406,14 +401,16 @@
     ```,
   )
 ]]
-#v(-15em)
+#v(-14em)
 
 #align(center)[*ต้นไม้เอวีแอลที่สร้างจากข้อมูลสุ่ม 100 ตัว*]
 #v(1em)
+#pagebreak()
 
 === *ต้นไม้เอวีแอลสูงเท่าใด* ?
 - ให้ $F_n$ คือต้นไม้เอวีแอลซึ่งสูง $h$ ที่มีจำนวนปมน้อยสุด
 
+#v(1em)
 #block(breakable: false)[
   #grid(
     align: center + top,
@@ -538,7 +535,7 @@
     ],
   )
 ]
-#v(-9.5em)
+#v(-10em)
 $
   |F_h| = 1 + |F_(h-1)| + |F_(h-2)|\
   "Fibonacci Tree"
@@ -695,6 +692,7 @@ class node {
 #grid(
   align: center,
   columns: (1fr, 0.2fr, 1fr),
+  row-gutter: -10pt,
   [
     #block(sticky: true)[#v(-2.5em)]
     #align(center)[#scale(x: 65%, y: 65%)[
@@ -704,7 +702,7 @@ class node {
           node[shape=circle];
           edge [len=0.1,arrowhead=none];
           r [shape=square];
-          r -> 20 [minlen=2,arrowhead=normal];
+          r -> 20 [minlen=2,arrowhead=normal,arrowsize=0.5];
           { rank=same; r; 20; }
           20 -> 10 [style=bold];
           10 -> 5;
@@ -735,7 +733,7 @@ class node {
           node[shape=circle];
           edge [len=0.1,arrowhead=none];
           r [shape=square];
-          r -> 10 [minlen=2,arrowhead=normal];
+          r -> 10 [minlen=2,arrowhead=normal,arrowsize=0.5];
           { rank=same; r; 10; }
           10 -> 5;
           10 -> 20 -> 15 [style=bold];
@@ -759,6 +757,8 @@ class node {
     $h_r = max(1+5, 2+15, 2+99)$
   ],
 )
+
+#v(1.5em)
 
 == CP::map_avl
 
@@ -807,6 +807,7 @@ node *erase(const KeyT &key, node *r) {
 
 === rebalance
 + #block(sticky: true)[`r` เอียงซ้ายมากไป และ `x` เอียงซ้าย $=>$ ```cpp rotate_left_child(r);```
+    #v(.5em)
     #grid(
       align: horizon,
       columns: (1fr, 0.2fr, 1fr),
@@ -864,6 +865,7 @@ node *erase(const KeyT &key, node *r) {
     )]
   #v(-2em)
 + #block(sticky: true)[`r` เอียงขวามากไป และ `x` เอียงขวา $=>$ ```cpp rotate_right_child(r);```
+    #v(.5em)
     #grid(
       align: horizon,
       columns: (1fr, 0.2fr, 1fr),
@@ -1130,7 +1132,7 @@ node *rebalance(node *r) {
                                                    \
                                                     8
       2          2              3            3
-     / \        / \\           / \          / \
+     / \\       / \\           / \          / \
     1   6   => 1   3     =>   2   6        2   6
       // \          \        /   / \      /   / \
       3   8          6      1   4   8    1   4   8
@@ -1142,7 +1144,7 @@ node *rebalance(node *r) {
       2   6      =>   2   6         =>   2   6
      /   / \         /   / \            /   / \
     1   4   8       1   4   8          1   4   14
-             \               \\               /  \
+             \\              \\               /  \
               15              14             8    15
             //                  \
            14                    15
@@ -1156,7 +1158,7 @@ node *rebalance(node *r) {
 - แต่ละปมเก็บความสูงไว้ตรวจสอบ
 - ถ้าหลังเพิ่ม/ลดข้อมูลแล้วผิดกฎ ให้ปรับต้นไม้
 - การปรับต้นไม้อาศัยการหมุนปม
-- เวลาการทำงานของการเพิ่ม ลง และค้นหาเป็น $cal(O)(log n)$
+- เวลาการทำงานของการเพิ่ม ลบ และค้นหาเป็น $cal(O)(log n)$
 
 
 === *ความสูงของต้นไม้* AVL

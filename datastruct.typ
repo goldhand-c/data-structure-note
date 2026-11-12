@@ -1,3 +1,9 @@
+#set document(
+  title: [2110211 Introduction to Data Structure],
+  author: "Sorrawee Kaka",
+  date: datetime.today(),
+)
+
 #set text(font: ("Linux Libertine", "KaiTi"), size: 10pt, number-type: "old-style")
 
 #set raw(theme: "z.tmTheme")

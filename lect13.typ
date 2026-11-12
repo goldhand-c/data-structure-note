@@ -623,7 +623,8 @@ class priority_queue {
     size_t mCap;
     size_t mSize;
     Comp mLess;
-    void expand(size_t capacity) {}  // Fix value rules
+    void expand(size_t capacity) {}
+    // fix value rules
     void fixUp(size_t idx) {}
     void fixDown(size_t idx) {}
   public:
@@ -747,7 +748,7 @@ mData: p = #, idx = @, tmp = 60
 === mLess
 - `priority_queue` allows a custom comparator
 - Custom comparator `X`
-  - We must be able to #text(fill: purple)[`X(a,b)`] where `X` will comapre $a$ and $b$ and `return` `true` only when $a$ is less than $b$
+  - We must be able to #text(fill: purple)[`X(a,b)`] where `X` will compare $a$ and $b$ and `return` `true` only when $a$ is less than $b$
   - `X` is a #text(fill: green)[variable] that implement `operator()`
 
 #v(1em)
@@ -783,7 +784,7 @@ void fixDown(size_t idx) {
   size_t c;
   while ((c = 2 * idx + 1) < mSize) {
     if ( c + 1 < mSize && mLess(mData[c], mData[c+1]) ) c++;
-    if ( mLess(mData[c],tmp) ) break;
+    if ( mLess(mData[c], tmp) ) break;
     mData[idx] = mData[c];
     idx = c;
   }
@@ -801,7 +802,8 @@ void fixDown(size_t idx) {
 === Construct PQ from n data
 ```cpp
 priority_queue(std::vector<T> &v, const Comp& c = Comp()) :
-    mData( new T[v.size()]() ), mCap( v.size() ), mSize( 0 ), mLess( c ) {
+    mData( new T[v.size()]() ), mCap( v.size() ), mSize( 0 ), mLess( c )
+{
   for (size_t i = 0; i < mSize; i++) push(v[i]);  // n times and each log(n)
 }
 ```
@@ -916,7 +918,42 @@ $
 === Exercise
 If we use different number of children per node, say $4$-ary heap, with same logic still holds.
 + How to keep data in dynamic array?
+  - Each node has upto 4 children.
+  - Parent of `idx` is at index `(idx - 1) / 4`.
+  - Children of `idx` are at indices `4*idx + i` for `i` in `1, 2, 3, 4`.
 + Write the new functions `fixUp` and `fixDown`
-+ Is it faster?? Consider any $n$-ary heap
 
-#box(fill: yellow, inset: 5pt)[Will do this part later]
+  ```cpp
+  void fixUp(size_t idx) {
+    T tmp = mData[idx];
+    while (idx > 0) {
+      size_t p = (idx - 1) / 4;  // just change this line
+      if ( mLess(tmp, mData[p]) ) break;
+      mData[idx] = mData[p]
+      idx = p;
+    }
+    mData[idx] = tmp;
+  }
+  ```
+
+  ```cpp
+  void fixDown(size_t idx) {
+    T tmp = mData[idx];
+    size_t c;
+    while ((c = 2 * idx + 1) < mSize) {
+      size_t c_max = c;
+      for (size_t i = 1; i < 4; i++) {
+        if ( c + i < mSize && mLess(mData[c_max], mData[c + i]) ) {
+          c_max = c + 1;
+        }
+      }
+      if ( mLess(mData[c_max], tmp) ) break;
+      mData[idx] = mData[c_max];
+      idx = c_max;
+    }
+    mData[idx] = tmp;
+  }
+  ```
++ Is it faster?? Consider any $n$-ary heap
+  - `fixUp` is $cal(O)(log_n N)$, #text(green)[faster] than binary heap
+  - `fixDown` is $cal(O)(n log_n N)$, #text(red)[slower] than binary heap

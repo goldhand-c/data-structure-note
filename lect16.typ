@@ -52,9 +52,9 @@ Binary Tree with value condition
     - search in left-subtree if #text(fill: green)[`e`] is #text(fill: orange)[less] than the #text(fill: green)[current node]
     - search in right-subtree if #text(fill: green)[`e`] is #text(fill: blue)[more] than the #text(fill: green)[current node]
   - Keep going until we find #text(fill: green)[`e`] or reach #text(fill: purple)[`NULL`]
-- Other operation is also depends on `find`
+- Other operations also depend on `find`
 
-#block(sticky: true)[#v(-8em)]
+#block(sticky: true)[#v(-9.5em)]
 #align(center)[#scale(x: 65%, y: 65%)[
   #raw-render(
     ```dot
@@ -62,27 +62,56 @@ Binary Tree with value condition
       node[shape=box];
       a [label="Find 9"];
       node[shape=circle,style=filled,fillcolor=white];
-      a -> 45 [label="9 is less than 45, search left-subtree"];
+      a -> 45 [arrowsize=0.5,fontcolor="blue",color=green];
       { rank=same; a; 45; }
-      edge [len=0.1,arrowhead=none];
+      edge [len=0.1,arrowhead=none,arrowsize=0.5,fontcolor="blue"];
       splines=line;
-      45 -> 2 [arrowhead=normal,label="9 is more than 2,  \nsearch right-subtree "];
-      2 -> 0 -> 1;
-      2 -> 20 [arrowhead=normal, label="9 is less than 20,\nsearch left-subtree"];
-      20 -> 9 [arrowhead=normal,label="Found!"];
+      45 -> 2 [arrowhead=normal,color=green,label="9 is less than 45,\nsearch left-subtree"];
+      2 -> 0;
+      d [label="",style=invis];
+      0 -> d [style=invis];
+      g [label="",style=invis];
+      0 -> g [style=invis];
+      0 -> 1;
+      e [label="",style=invis];
+      2 -> e [style=invis];
+      2 -> 20 [arrowhead=normal,color=green,label="9 is more than 2,\nsearch right-subtree"];
+      9 [style=bold,fontcolor=darkgreen,color=green];
+      20 -> 9 [arrowhead=normal,color=green,label="9 is less than 20,\nsearch left-subtree"];
+      h [label="",style=invis];
+      20 -> h [style=invis];
       20 -> 21;
       9 -> 3;
       9 -> 14;
+      b [label="",style=invis];
+      45 -> b [style=invis];
+      c [label="",style=invis];
+      45 -> c [style=invis];
+      n [label="",style=invis];
+      45 -> n [style=invis];
       45 -> 55 -> 49 -> 48 -> 46;
-      49 -> 53 -> 50 -> 52;
+      k [label="",style=invis];
+      48 -> k [style=invis];
+      i [label="",style=invis];
+      49 -> i [style=invis];
+      49 -> 53 -> 50;
+      l [label="",style=invis];
+      53 -> l [style=invis];
+      m [label="",style=invis];
+      50 -> m [style=invis];
+      50 -> 52;
+      f [label="",style=invis];
+      55 -> f [style=invis];
       55 -> 70 -> 56;
+      j [label="",style=invis];
+      70 -> j [style=invis];
       70 -> 88;
     }
 
     ```,
   )
 ]]
-#v(-8em)
+#v(-5em)
 
 == Insert && Erase with 0, 1 child
 
@@ -122,7 +151,7 @@ node* find_node(const ValueT& k, node* r, node* &parent) {
 - Replace by #text(fill: blue)[successor] (or #text(fill: red)[predecessor]) preserves value rules
   - #text(fill: blue)[Successor] is the minimum in the #text(fill: purple)[right-subtree]
   - #text(fill: red)[Predecessor] is the maximum in the #text(fill: orange)[left-subtree]
-- Both exists (because the node has both subtrees)
+- Both exist (because the node has both subtrees)
 
 #grid(
   columns: 2,
@@ -135,7 +164,8 @@ node* find_node(const ValueT& k, node* r, node* &parent) {
           node[shape=box];
           a [label="Erase 49"];
           node[shape=circle,style=filled,fillcolor=white];
-          a -> 49;
+          49 [color=red,fontcolor=red,style=bold];
+          a -> 49 [arrowsize=0.5,minlen=3];
           { rank=same; a; 49; }
           { rank=same; 50; b; }
           edge [len=0.1,arrowhead=none];
@@ -146,6 +176,7 @@ node* find_node(const ValueT& k, node* r, node* &parent) {
           49 -> x [style=invis];
           x [style=invis,label=""];
           49 -> 53;
+          50 [color=purple,fontcolor=purple,style=bold];
           53 -> 50;
           53 -> b [style=invis];
           b [style=invis,label="◀ Successor"];
@@ -168,6 +199,7 @@ node* find_node(const ValueT& k, node* r, node* &parent) {
           { rank=same; 52; b; }
           edge [len=0.1,arrowhead=none];
           splines=line;
+          50 [color=purple,fontcolor=purple,style=bold];
           50 -> 48 -> 46;
           48 -> x1 [style=invis];
           x1 [style=invis,label=""];
@@ -253,13 +285,15 @@ node* find_node(const ValueT& k, node* r, node* &parent) {
 )
 
 === Complexity Analysis
-- `insert`, `erase` depends on #text(fill: blue)[`find`], #text(fill: blue)[`find_min`] (or #text(fill: blue)[`find_max`])
+- `insert`, `erase` depend on #text(fill: blue)[`find`], #text(fill: blue)[`find_min`] (or #text(fill: blue)[`find_max`])
 - All finds start from root and in the worst case reach the leaf
   - Hence, #text(fill: purple)[$cal(O)(h)$]
 - Height of the tree can be in the range from #text(fill: green)[$lg n$] to #text(fill: green)[$n$]
 - For #text(fill: red)[$1,000,000$] nodes, it's in the range of #text(fill: red)[$[20,999999]$]
   - #text(fill: purple)[$cal(O)(h)$] is, right now, #text(fill: red)[$cal(O)(n)$]
   - Will be fixed by AVL tree
+
+#pagebreak()
 
 == CP::map_bst (insert)
 Using Binary Search Tree to create associated data structure
@@ -410,7 +444,7 @@ size_t erase(const KeyT &key) {
   node *parent = NULL;
   node *ptr = find_node(key, mRoot, parent);
   if (ptr == NULL) return 0;  // not found
-  if (ptr->left != NULL && ptr-> != NULL) {
+  if (ptr->left != NULL && ptr->right != NULL) {
     // have two children => erase min
     node *min = find_min_node(ptr->right);  // successor
     // remove min like case 0 or 1 child
